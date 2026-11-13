@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>产品与服务-技研(GIKEN)静压植桩机 - 天远科技集团</title>
+  <meta name="description" content="天远科技集团 - 工程机械智能化解决方案服务商">
+  <link rel="stylesheet" href="assets/css/styles.css">
+  <style>
+    /* 设备展示 - 产品卡片点击区 */
+    .equipment-section {
+      position: relative;
+      width: 100%;
+      max-width: 1920px;
+      margin: 0 auto;
+      line-height: 0;
+    }
+    .equipment-section .mod {
+      width: 100%;
+      line-height: 0;
+    }
+    .equipment-section .mod img {
+      display: block;
+      width: 100%;
+      height: auto;
+    }
+    .equipment-card {
+      position: absolute;
+      display: block;
+      overflow: hidden;
+      cursor: default;
+      transition: transform 0.2s cubic-bezier(0.23, 1, 0.32, 1);
+      z-index: 10;
+    }
+    .equipment-card:hover {
+      transform: scale(1.02);
+    }
+    .equipment-card img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: fill;
+      pointer-events: none;
+    }
+    .equipment-card-pdf {
+      position: absolute;
+      display: block;
+      overflow: hidden;
+      cursor: pointer;
+      z-index: 11;
+      border-radius: 6px;
+      background: transparent;
+      transition: background 0.18s cubic-bezier(0.23, 1, 0.32, 1);
+    }
+    .equipment-card-pdf:hover {
+      background: rgba(11, 48, 142, 0.10);
+    }
+    .equipment-card-inquiry:focus-visible,
+    .equipment-card-pdf:focus-visible {
+      outline: 2px solid #0b308e;
+      outline-offset: 2px;
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .equipment-card { transition: none; }
+      .equipment-card:hover { transform: none; }
+    }
+    @media (hover: hover) and (pointer: fine) {
+      .equipment-card:hover { transform: scale(1.02); }
+    }
+
+    /* ===== 产品卡片：在线询价 热区 ===== */
+    .equipment-card-inquiry {
+      position: absolute;
+      display: block;
+      border: 0;
+      padding: 0;
+      margin: 0;
+      background: transparent;
+      cursor: pointer;
+      z-index: 11;
+    }
+
+    /* ===== 通用弹窗（PDF 预览 / 询价） ===== */
+    .pp-modal-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+      background: rgba(8, 18, 40, 0.55);
+      -webkit-backdrop-filter: blur(2px);
+      backdrop-filter: blur(2px);
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.25s cubic-bezier(0.23, 1, 0.32, 1),
+                  visibility 0.25s cubic-bezier(0.23, 1, 0.32, 1);
+    }
+    .pp-modal-overlay.is-open { opacity: 1; visibility: visible; }
+    .pp-modal {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+      max-width: 920px;
+      max-height: 90vh;
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 24px 70px rgba(8, 18, 40, 0.35);
+      overflow: hidden;
+      transform: scale(0.95);
+      opacity: 0;
+      transition: transform 0.25s cubic-bezier(0.23, 1, 0.32, 1),
+                  opacity 0.25s cubic-bezier(0.23, 1, 0.32, 1);
+    }
+    .pp-modal-overlay.is-open .pp-modal { transform: scale(1); opacity: 1; }
+    .pp-modal__header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px 20px;
+      border-bottom: 1px solid #eef0f4;
+      flex: 0 0 auto;
+    }
+    .pp-modal__title { margin: 0; font-size: 17px; font-weight: 600; color: var(--primary, #0b308e); }
+    .pp-modal__close {
+      border: 0; background: transparent; font-size: 26px; line-height: 1;
+      color: #8a92a6; cursor: pointer; width: 36px; height: 36px;
+      border-radius: 8px; transition: background 0.15s ease, color 0.15s ease;
+    }
+    .pp-modal__close:hover { background: #f2f4f8; color: #0b308e; }
+    .pp-modal__body { position: relative; flex: 1 1 auto; min-height: 0; background: #f5f6f8; }
+    .pp-modal__iframe { width: 100%; height: 78vh; border: 0; display: block; background: #fff; }
+    .pp-modal__loading {
+      position: absolute; inset: 0; display: flex; flex-direction: column;
+      align-items: center; justify-content: center; gap: 12px; color: #6b7385; font-size: 14px;
+    }
+    .pp-spinner {
+      width: 34px; height: 34px; border: 3px solid #d7dce6; border-top-color: #0b308e;
+      border-radius: 50%; animation: pp-spin 0.8s linear infinite;
+    }
+    @keyframes pp-spin { to { transform: rotate(360deg); } }
+    .pp-modal__error {
+      position: absolute; inset: 0; display: flex; flex-direction: column;
+      align-items: center; justify-content: center; gap: 10px; padding: 24px;
+      text-align: center; color: #6b7385;
+    }
+    .pp-modal__error-title { font-size: 16px; font-weight: 600; color: #333; margin: 0; }
+    .pp-modal__error-desc { margin: 0; font-size: 14px; }
+
+    /* 询价表单 */
+    .pp-form { padding: 20px; overflow-y: auto; display: flex; flex-direction: column; gap: 14px; }
+    .pp-form__row { display: flex; flex-direction: column; gap: 6px; }
+    .pp-form__row label { font-size: 13px; color: #4a5160; font-weight: 500; }
+    .pp-form__row .req { color: #e8453c; }
+    .pp-form input, .pp-form textarea {
+      font: inherit; font-size: 14px; padding: 10px 12px; border: 1px solid #d7dce6;
+      border-radius: 8px; color: #1c2230; background: #fff;
+      transition: border-color 0.15s ease, box-shadow 0.15s ease;
+    }
+    .pp-form input:focus, .pp-form textarea:focus {
+      outline: none; border-color: #0b308e; box-shadow: 0 0 0 3px rgba(11, 48, 142, 0.12);
+    }
+    .pp-form input[readonly] { background: #f3f5f9; color: #6b7385; }
+    .pp-modal__footer {
+      display: flex; justify-content: flex-end; gap: 10px; padding: 14px 20px;
+      border-top: 1px solid #eef0f4; flex: 0 0 auto;
+    }
+    .pp-btn {
+      font: inherit; font-size: 14px; font-weight: 500; padding: 10px 20px; border-radius: 8px;
+      border: 1px solid #d7dce6; background: #fff; color: #333; cursor: pointer;
+      transition: background 0.15s ease, transform 0.1s ease;
+    }
+    .pp-btn:hover { background: #f2f4f8; }
+    .pp-btn:active { transform: scale(0.97); }
+    .pp-btn--primary { background: #0b308e; border-color: #0b308e; color: #fff; }
+    .pp-btn--primary:hover { background: #0a2a7d; }
+    .pp-form__success {
+      background: #e8f6ee; color: #1f7a45; border: 1px solid #b6e3c8;
+      border-radius: 8px; padding: 10px 12px; font-size: 14px; text-align: center;
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .pp-modal-overlay, .pp-modal, .pp-modal-overlay.is-open .pp-modal { transition: opacity 0.2s ease; }
+      .pp-modal { transform: none; }
+      .pp-spinner { animation: none; }
+    }
+
+
+    /* ===== v2 新原型（2026-10-29）：整块图分段 + 产品卡片图层 ===== */
+    .case-section { position: relative; }
+    .equipment-section > .eq-base {
+      display: block;
+      width: 100%;
+      height: auto;
+    }
+    .equipment-section > .equipment-card:hover { z-index: 12; }
+    /* 施工案例按钮热区（叠在烘焙的蓝色「查看PDF」按钮上） */
+    .case-section .equipment-card-pdf { border-radius: 4px; }
+    .case-section .equipment-card-pdf:hover { background: rgba(255, 255, 255, 0.14); }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <div id="site-header"></div>
+<script src="assets/js/site-header.js"></script>
+    <main>
+      <section class="mod"><img src="assets/img/product-pile/v2/01-hero.png" alt="技研静压植桩机"></section>
+      <section class="mod"><img src="assets/img/product-pile/v2/02-intro.png" alt="业务介绍"></section>
+      <section class="mod"><img src="assets/img/product-pile/v2/03-business.png" alt="主营业务"></section>
+      <section class="mod"><img src="assets/img/product-pile/v2/04-difference.png" alt="静压植桩机与其他桩机的区别"></section>
+      <section class="mod"><img src="assets/img/product-pile/v2/05-advantage.png" alt="核心优势"></section>
+      <section class="mod case-section">
+        <img src="assets/img/product-pile/v2/06-cases.png" alt="施工案例">
+        <a href="assets/pdf/product-pile/cases/case-01-gd-jiankeyuan-jikeng.pdf" data-pdf="assets/pdf/product-pile/cases/case-01-gd-jiankeyuan-jikeng.pdf" data-title="广东省建筑科学研究院生产研发大楼基坑工程" data-pdf-exists="true" class="equipment-card-pdf" style="left:11.510416666666666%;top:78.0711825487945%;width:13.593749999999998%;height:6.42939150401837%;" aria-label="广东省建筑科学研究院生产研发大楼基坑工程 查看PDF" title="查看PDF" target="_blank" rel="noopener noreferrer"></a>
+        <a href="assets/pdf/product-pile/cases/case-02-sunan-yunhe-hangdao.pdf" data-pdf="assets/pdf/product-pile/cases/case-02-sunan-yunhe-hangdao.pdf" data-title="苏南运河苏州段三级航道整治工程" data-pdf-exists="true" class="equipment-card-pdf" style="left:32.65625%;top:78.0711825487945%;width:13.593749999999998%;height:6.42939150401837%;" aria-label="苏南运河苏州段三级航道整治工程 查看PDF" title="查看PDF" target="_blank" rel="noopener noreferrer"></a>
+        <a href="assets/pdf/product-pile/cases/case-03-metro-line7.pdf" data-pdf="assets/pdf/product-pile/cases/case-03-metro-line7.pdf" data-title="地铁七号线配套工程" data-pdf-exists="true" class="equipment-card-pdf" style="left:53.80208333333333%;top:78.0711825487945%;width:13.593749999999998%;height:6.42939150401837%;" aria-label="地铁七号线配套工程 查看PDF" title="查看PDF" target="_blank" rel="noopener noreferrer"></a>
+        <a href="assets/pdf/product-pile/cases/case-04-nanjing-chengxi-gandao.pdf" data-pdf="assets/pdf/product-pile/cases/case-04-nanjing-chengxi-gandao.pdf" data-title="南京市城西干道综合改造工程" data-pdf-exists="true" class="equipment-card-pdf" style="left:74.94791666666667%;top:78.0711825487945%;width:13.593749999999998%;height:6.42939150401837%;" aria-label="南京市城西干道综合改造工程 查看PDF" title="查看PDF" target="_blank" rel="noopener noreferrer"></a>
+      </section>
+      <div class="equipment-section">
+        <img class="eq-base" src="assets/img/product-pile/v2/07-equipment.png" alt="设备展示">
+        <div class="equipment-card" style="left:8.333333333333332%;top:6.744405924992121%;width:19.895833333333332%;height:15.757957768673181%;">
+          <img src="assets/img/product-pile/v2/cards/F101.png" alt="F101 静压植桩机">
+          <button type="button" class="equipment-card-inquiry" data-model="F101" data-title="F101 静压植桩机" style="left:15.968586387434556%;top:74.2%;width:68.32460732984293%;height:11.200000000000001%;" aria-label="F101 静压植桩机 在线询价" title="在线询价"></button>
+          <a href="assets/pdf/product-pile/F101.pdf" data-pdf="assets/pdf/product-pile/F101.pdf" data-title="F101 静压植桩机" data-pdf-exists="true" class="equipment-card-pdf" style="left:15.968586387434556%;top:88.6%;width:68.32460732984293%;height:6.800000000000001%;" aria-label="F101 静压植桩机 查看PDF" title="查看PDF" target="_blank" rel="noopener noreferrer"></a>
+        </div>
+        <div class="equipment-card" style="left:29.479166666666668%;top:6.744405924992121%;width:19.895833333333332%;height:15.757957768673181%;">
+          <img src="assets/img/product-pile/v2/cards/F111.png" alt="F111 静压植桩机">
+          <button type="button" class="equipment-card-inquiry" data-model="F111" data-title="F111 静压植桩机" style="left:15.968586387434556%;top:74.2%;width:68.32460732984293%;height:11.200000000000001%;" aria-label="F111 静压植桩机 在线询价" title="在线询价"></button>
+          <a href="assets/pdf/product-pile/F111.pdf" data-pdf="assets/pdf/product-pile/F111.pdf" data-title="F111 静压植桩机" data-pdf-exists="true" class="equipment-card-pdf" style="left:15.968586387434556%;top:88.6%;width:68.32460732984293%;height:6.800000000000001%;" aria-label="F111 静压植桩机 查看PDF" title="查看PDF" target="_blank" rel="noopener noreferrer"></a>
+        </div>
+        <div class="equipment-card" style="left:50.625%;top:6.744405924992121%;width:19.895833333333332%;height:15.757957768673181%;">
+          <img src="assets/img/product-pile/v2/cards/F201.png" alt="F201 静压植桩机">
+          <button type="button" class="equipment-card-inquiry" data-model="F201" data-title="F201 静压植桩机" style="left:15.968586387434556%;top:74.2%;width:68.32460732984293%;height:11.200000000000001%;" aria-label="F201 静压植桩机 在线询价" title="在线询价"></button>
+          <a href="assets/pdf/product-pile/F201.pdf" data-pdf="assets/pdf/product-pile/F201.pdf" data-title="F201 静压植桩机" data-pdf-exists="true" class="equipment-card-pdf" style="left:15.968586387434556%;top:88.6%;width:68.32460732984293%;height:6.800000000000001%;" aria-label="F201 静压植桩机 查看PDF" title="查看PDF" target="_blank" rel="noopener noreferrer"></a>
+        </div>
+        <div class="equipment-card" style="left:71.77083333333333%;top:6.744405924992121%;width:19.895833333333332%;height:15.757957768673181%;">
+          <img src="assets/img/product-pile/v2/cards/F301-900.png" alt="F301-900 静压植桩机">
+          <button type="button" class="equipment-card-inquiry" data-model="F301-900" data-title="F301-900 静压植桩机" style="left:15.968586387434556%;top:74.2%;width:68.32460732984293%;height:11.200000000000001%;" aria-label="F301-900 静压植桩机 在线询价" title="在线询价"></button>
+          <a href="assets/pdf/product-pile/F301-900.pdf" data-pdf="assets/pdf/product-pile/F301-900.pdf" data-title="F301-900 静压植桩机" data-pdf-exists="true" class="equipment-card-pdf" style="left:15.968586387434556%;top:88.6%;width:68.32460732984293%;height:6.800000000000001%;" aria-label="F301-900 静压植桩机 查看PDF" title="查看PDF" target="_blank" rel="noopener noreferrer"></a>
+        </div>
+        <div class="equipment-card" style="left:8.333333333333332%;top:24.015127639457926%;width:19.895833333333332%;height:15.757957768673181%;">
+          <img src="assets/img/product-pile/v2/cards/F401-1400.png" alt="F401-1400 静压植桩机">
+          <button type="button" class="equipment-card-inquiry" data-model="F401-1400" data-title="F401-1400 静压植桩机" style="left:15.968586387434556%;top:74.2%;width:68.32460732984293%;height:11.200000000000001%;" aria-label="F401-1400 静压植桩机 在线询价" title="在线询价"></button>
+          <a href="assets/pdf/product-pile/F401-1400.pdf" data-pdf="assets/pdf/product-pile/F401-1400.pdf" data-title="F401-1400 静压植桩机" data-pdf-exists="true" class="equipment-card-pdf" style="left:15.968586387434556%;top:88.6%;width:68.32460732984293%;height:6.800000000000001%;" aria-label="F401-1400 静压植桩机 查看PDF" title="查看PDF" target="_blank" rel="noopener noreferrer"></a>
+        </div>
+        <div class="equipment-card" style="left:29.479166666666668%;top:24.015127639457926%;width:19.895833333333332%;height:15.757957768673181%;">
+          <img src="assets/img/product-pile/v2/cards/F401-G1200.png" alt="F401-G1200 静压植桩机">
+          <button type="button" class="equipment-card-inquiry" data-model="F401-G1200" data-title="F401-G1200 静压植桩机" style="left:15.968586387434556%;top:74.2%;width:68.32460732984293%;height:11.200000000000001%;" aria-label="F401-G1200 静压植桩机 在线询价" title="在线询价"></button>
+          <a href="assets/pdf/product-pile/F401-G1200.pdf" data-pdf="assets/pdf/product-pile/F401-G1200.pdf" data-title="F401-G1200 静压植桩机" data-pdf-exists="true" class="equipment-card-pdf" style="left:15.968586387434556%;top:88.6%;width:68.32460732984293%;height:6.800000000000001%;" aria-label="F401-G1200 静压植桩机 查看PDF" title="查看PDF" target="_blank" rel="noopener noreferrer"></a>
+        </div>
+        <div class="equipment-card" style="left:50.625%;top:24.015127639457926%;width:19.895833333333332%;height:15.757957768673181%;">
+          <img src="assets/img/product-pile/v2/cards/F501-G1500.png" alt="F501-G1500 静压植桩机">
+          <button type="button" class="equipment-card-inquiry" data-model="F501-G1500" data-title="F501-G1500 静压植桩机" style="left:15.968586387434556%;top:74.2%;width:68.32460732984293%;height:11.200000000000001%;" aria-label="F501-G1500 静压植桩机 在线询价" title="在线询价"></button>
+          <a href="assets/pdf/product-pile/F501-G1500.pdf" data-pdf="assets/pdf/product-pile/F501-G1500.pdf" data-title="F501-G1500 静压植桩机" data-pdf-exists="true" class="equipment-card-pdf" style="left:15.968586387434556%;top:88.6%;width:68.32460732984293%;height:6.800000000000001%;" aria-label="F501-G1500 静压植桩机 查看PDF" title="查看PDF" target="_blank" rel="noopener noreferrer"></a>
+        </div>
+        <div class="equipment-card" style="left:71.77083333333333%;top:24.015127639457926%;width:19.895833333333332%;height:15.757957768673181%;">
+          <img src="assets/img/product-pile/v2/cards/GRV2540.png" alt="GRV2540 静压植桩机">
+          <button type="button" class="equipment-card-inquiry" data-model="GRV2540" data-title="GRV2540 静压植桩机" style="left:15.968586387434556%;top:74.2%;width:68.32460732984293%;height:11.200000000000001%;" aria-label="GRV2540 静压植桩机 在线询价" title="在线询价"></button>
+          <a href="assets/pdf/product-pile/GRV2540.pdf" data-pdf="assets/pdf/product-pile/GRV2540.pdf" data-title="GRV2540 静压植桩机" data-pdf-exists="true" class="equipment-card-pdf" style="left:15.968586387434556%;top:88.6%;width:68.32460732984293%;height:6.800000000000001%;" aria-label="GRV2540 静压植桩机 查看PDF" title="查看PDF" target="_blank" rel="noopener noreferrer"></a>
+        </div>
+        <div class="equipment-card" style="left:27.552083333333332%;top:42.70406555310432%;width:14.635416666666668%;height:13.394264103372203%;">
+          <img src="assets/img/product-pile/v2/cards/CB2-9.png" alt="CB2-9">
+          <button type="button" class="equipment-card-inquiry" data-model="CB2-9" data-title="CB2-9" style="left:3.558718861209965%;top:72.94117647058823%;width:92.88256227758008%;height:13.176470588235295%;" aria-label="CB2-9 在线询价" title="在线询价"></button>
+          <a href="assets/pdf/product-pile/CB2-9.pdf" data-pdf="assets/pdf/product-pile/CB2-9.pdf" data-title="CB2-9" data-pdf-exists="true" class="equipment-card-pdf" style="left:3.558718861209965%;top:90.11764705882352%;width:92.88256227758008%;height:7.529411764705881%;" aria-label="CB2-9 查看PDF" title="查看PDF" target="_blank" rel="noopener noreferrer"></a>
+        </div>
+        <div class="equipment-card" style="left:43.75%;top:42.70406555310432%;width:14.635416666666668%;height:13.394264103372203%;">
+          <img src="assets/img/product-pile/v2/cards/CB3-6-plate.png" alt="CB3-6 钢板桩型号">
+          <button type="button" class="equipment-card-inquiry" data-model="CB3-6-plate" data-title="CB3-6 钢板桩型号" style="left:3.558718861209965%;top:72.94117647058823%;width:92.88256227758008%;height:13.176470588235295%;" aria-label="CB3-6 钢板桩型号 在线询价" title="在线询价"></button>
+          <a href="assets/pdf/product-pile/CB3-6-plate.pdf" data-pdf="assets/pdf/product-pile/CB3-6-plate.pdf" data-title="CB3-6 钢板桩型号" data-pdf-exists="true" class="equipment-card-pdf" style="left:3.558718861209965%;top:90.11764705882352%;width:92.88256227758008%;height:7.529411764705881%;" aria-label="CB3-6 钢板桩型号 查看PDF" title="查看PDF" target="_blank" rel="noopener noreferrer"></a>
+        </div>
+        <div class="equipment-card" style="left:59.947916666666664%;top:42.70406555310432%;width:14.635416666666668%;height:13.394264103372203%;">
+          <img src="assets/img/product-pile/v2/cards/CB3-6-tube.png" alt="CB3-6 钢管桩型号">
+          <button type="button" class="equipment-card-inquiry" data-model="CB3-6-tube" data-title="CB3-6 钢管桩型号" style="left:3.558718861209965%;top:72.94117647058823%;width:92.88256227758008%;height:13.176470588235295%;" aria-label="CB3-6 钢管桩型号 在线询价" title="在线询价"></button>
+          <a href="assets/pdf/product-pile/CB3-6-tube.pdf" data-pdf="assets/pdf/product-pile/CB3-6-tube.pdf" data-title="CB3-6 钢管桩型号" data-pdf-exists="true" class="equipment-card-pdf" style="left:3.558718861209965%;top:90.11764705882352%;width:92.88256227758008%;height:7.529411764705881%;" aria-label="CB3-6 钢管桩型号 查看PDF" title="查看PDF" target="_blank" rel="noopener noreferrer"></a>
+        </div>
+        <div class="equipment-card" style="left:76.14583333333333%;top:42.70406555310432%;width:14.635416666666668%;height:13.394264103372203%;">
+          <img src="assets/img/product-pile/v2/cards/CB4-2.png" alt="CB4-2">
+          <button type="button" class="equipment-card-inquiry" data-model="CB4-2" data-title="CB4-2" style="left:3.558718861209965%;top:72.94117647058823%;width:92.88256227758008%;height:13.176470588235295%;" aria-label="CB4-2 在线询价" title="在线询价"></button>
+          <a href="assets/pdf/product-pile/CB4-2.pdf" data-pdf="assets/pdf/product-pile/CB4-2.pdf" data-title="CB4-2" data-pdf-exists="true" class="equipment-card-pdf" style="left:3.558718861209965%;top:90.11764705882352%;width:92.88256227758008%;height:7.529411764705881%;" aria-label="CB4-2 查看PDF" title="查看PDF" target="_blank" rel="noopener noreferrer"></a>
+        </div>
+        <div class="equipment-card" style="left:43.75%;top:59.974787267570115%;width:14.635416666666668%;height:13.394264103372203%;">
+          <img src="assets/img/product-pile/v2/cards/PR1.png" alt="PR1">
+          <button type="button" class="equipment-card-inquiry" data-model="PR1" data-title="PR1" style="left:3.558718861209965%;top:72.94117647058823%;width:92.88256227758008%;height:13.176470588235295%;" aria-label="PR1 在线询价" title="在线询价"></button>
+          <a href="assets/pdf/product-pile/PR1.pdf" data-pdf="assets/pdf/product-pile/PR1.pdf" data-title="PR1" data-pdf-exists="true" class="equipment-card-pdf" style="left:3.558718861209965%;top:90.11764705882352%;width:92.88256227758008%;height:7.529411764705881%;" aria-label="PR1 查看PDF" title="查看PDF" target="_blank" rel="noopener noreferrer"></a>
+        </div>
+        <div class="equipment-card" style="left:59.947916666666664%;top:59.974787267570115%;width:14.635416666666668%;height:13.394264103372203%;">
+          <img src="assets/img/product-pile/v2/cards/PR2.png" alt="PR2">
+          <button type="button" class="equipment-card-inquiry" data-model="PR2" data-title="PR2" style="left:3.558718861209965%;top:72.94117647058823%;width:92.88256227758008%;height:13.176470588235295%;" aria-label="PR2 在线询价" title="在线询价"></button>
+          <a href="assets/pdf/product-pile/PR2.pdf" data-pdf="assets/pdf/product-pile/PR2.pdf" data-title="PR2" data-pdf-exists="true" class="equipment-card-pdf" style="left:3.558718861209965%;top:90.11764705882352%;width:92.88256227758008%;height:7.529411764705881%;" aria-label="PR2 查看PDF" title="查看PDF" target="_blank" rel="noopener noreferrer"></a>
+        </div>
+        <div class="equipment-card" style="left:34.791666666666664%;top:77.24550898203593%;width:14.635416666666668%;height:13.394264103372203%;">
+          <img src="assets/img/product-pile/v2/cards/UR1.png" alt="UR1">
+          <button type="button" class="equipment-card-inquiry" data-model="UR1" data-title="UR1" style="left:3.558718861209965%;top:72.94117647058823%;width:92.88256227758008%;height:13.176470588235295%;" aria-label="UR1 在线询价" title="在线询价"></button>
+          <a href="assets/pdf/product-pile/UR1.pdf" data-pdf="assets/pdf/product-pile/UR1.pdf" data-title="UR1" data-pdf-exists="false" class="equipment-card-pdf" style="left:3.558718861209965%;top:90.11764705882352%;width:92.88256227758008%;height:7.529411764705881%;" aria-label="UR1 查看PDF" title="查看PDF" target="_blank" rel="noopener noreferrer"></a>
+        </div>
+        <div class="equipment-card" style="left:50.989583333333336%;top:77.24550898203593%;width:14.635416666666668%;height:13.394264103372203%;">
+          <img src="assets/img/product-pile/v2/cards/UR3.png" alt="UR3">
+          <button type="button" class="equipment-card-inquiry" data-model="UR3" data-title="UR3" style="left:3.558718861209965%;top:72.94117647058823%;width:92.88256227758008%;height:13.176470588235295%;" aria-label="UR3 在线询价" title="在线询价"></button>
+          <a href="assets/pdf/product-pile/UR3.pdf" data-pdf="assets/pdf/product-pile/UR3.pdf" data-title="UR3" data-pdf-exists="false" class="equipment-card-pdf" style="left:3.558718861209965%;top:90.11764705882352%;width:92.88256227758008%;height:7.529411764705881%;" aria-label="UR3 查看PDF" title="查看PDF" target="_blank" rel="noopener noreferrer"></a>
+        </div>
+        <div class="equipment-card" style="left:67.1875%;top:77.24550898203593%;width:14.635416666666668%;height:13.394264103372203%;">
+          <img src="assets/img/product-pile/v2/cards/UR5.png" alt="UR5">
+          <button type="button" class="equipment-card-inquiry" data-model="UR5" data-title="UR5" style="left:3.558718861209965%;top:72.94117647058823%;width:92.88256227758008%;height:13.176470588235295%;" aria-label="UR5 在线询价" title="在线询价"></button>
+          <a href="assets/pdf/product-pile/UR5.pdf" data-pdf="assets/pdf/product-pile/UR5.pdf" data-title="UR5" data-pdf-exists="false" class="equipment-card-pdf" style="left:3.558718861209965%;top:90.11764705882352%;width:92.88256227758008%;height:7.529411764705881%;" aria-label="UR5 查看PDF" title="查看PDF" target="_blank" rel="noopener noreferrer"></a>
+        </div>
+      </div>
+
+    <!-- 模块 6：全站底部导航栏（按「底部导航栏.png」制作，第三项新增） -->
+    <div id="site-footer-new"></div>
+    <script src="assets/js/site-footer.js"></script>
+    </main>
+  </div>
+
+  <!-- PDF 预览弹窗 -->
+  <div class="pp-modal-overlay" id="pdfModal" role="dialog" aria-modal="true" aria-labelledby="pdfModalTitle">
+    <div class="pp-modal">
+      <div class="pp-modal__header">
+        <h3 id="pdfModalTitle" class="pp-modal__title">PDF 预览</h3>
+        <button type="button" class="pp-modal__close" data-close aria-label="关闭">&times;</button>
+      </div>
+      <div class="pp-modal__body">
+        <div class="pp-modal__loading" id="pdfLoading"><span class="pp-spinner"></span><span>正在加载 PDF 文档…</span></div>
+        <iframe id="pdfFrame" class="pp-modal__iframe" title="PDF 预览"></iframe>
+        <div class="pp-modal__error" id="pdfError" hidden>
+          <p class="pp-modal__error-title">无法预览该 PDF 文件</p>
+          <p class="pp-modal__error-desc" id="pdfErrorDesc"></p>
+          <a id="pdfDownloadLink" class="pp-btn pp-btn--primary" href="#" target="_blank" rel="noopener">点击下载 PDF</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 在线询价弹窗 -->
+  <div class="pp-modal-overlay" id="inquiryModal" role="dialog" aria-modal="true" aria-labelledby="inquiryModalTitle">
+    <div class="pp-modal">
+      <div class="pp-modal__header">
+        <h3 id="inquiryModalTitle" class="pp-modal__title">产品询价</h3>
+        <button type="button" class="pp-modal__close" data-close aria-label="关闭">&times;</button>
+      </div>
+      <form class="pp-form" id="inquiryForm" novalidate>
+        <div class="pp-form__row">
+          <label for="iq-company">公司名称 <span class="req">*</span></label>
+          <input type="text" id="iq-company" name="company" required placeholder="请输入公司名称">
+        </div>
+        <div class="pp-form__row">
+          <label for="iq-model">产品型号</label>
+          <input type="text" id="iq-model" name="model" readonly>
+        </div>
+        <div class="pp-form__row">
+          <label for="iq-qty">数量 <span class="req">*</span></label>
+          <input type="number" id="iq-qty" name="qty" min="1" required placeholder="请输入采购数量">
+        </div>
+        <div class="pp-form__row">
+          <label for="iq-name">姓名 <span class="req">*</span></label>
+          <input type="text" id="iq-name" name="name" required placeholder="请输入您的姓名">
+        </div>
+        <div class="pp-form__row">
+          <label for="iq-contact">联系方式 <span class="req">*</span></label>
+          <input type="text" id="iq-contact" name="contact" required placeholder="电话或邮箱">
+        </div>
+        <div class="pp-form__row">
+          <label for="iq-note">备注</label>
+          <textarea id="iq-note" name="note" rows="3" placeholder="其他需求说明（选填）"></textarea>
+        </div>
+        <div class="pp-form__success" id="inquirySuccess" hidden>提交成功，我们会尽快与您联系！</div>
+        <div class="pp-modal__footer">
+          <button type="button" class="pp-btn" data-close>关闭</button>
+          <button type="submit" class="pp-btn pp-btn--primary">提交询价</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script>
+  (function () {
+    var EASE = 'cubic-bezier(0.23, 1, 0.32, 1)';
+    function openModal(ov) {
+      ov.classList.add('is-open');
+      ov.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
+      var c = ov.querySelector('[data-close]');
+      if (c) c.focus();
+    }
+    function closeModal(ov) {
+      ov.classList.remove('is-open');
+      ov.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
+    }
+    // overlay click (outside modal) & close buttons & Esc
+    document.querySelectorAll('.pp-modal-overlay').forEach(function (ov) {
+      ov.addEventListener('click', function (e) { if (e.target === ov) closeModal(ov); });
+      ov.querySelectorAll('[data-close]').forEach(function (b) {
+        b.addEventListener('click', function () { closeModal(ov); });
+      });
+      ov.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeModal(ov); });
+    });
+
+    // ---- PDF preview modal ----
+    var pdfModal = document.getElementById('pdfModal');
+    var pdfFrame = document.getElementById('pdfFrame');
+    var pdfLoading = document.getElementById('pdfLoading');
+    var pdfError = document.getElementById('pdfError');
+    var pdfErrorDesc = document.getElementById('pdfErrorDesc');
+    var pdfDownloadLink = document.getElementById('pdfDownloadLink');
+    var pdfTitle = document.getElementById('pdfModalTitle');
+
+    function showPdfError(msg, url) {
+      pdfLoading.hidden = true;
+      pdfFrame.style.display = 'none';
+      pdfErrorDesc.textContent = msg;
+      pdfDownloadLink.href = url;
+      pdfError.hidden = false;
+    }
+    function openPdf(url, title) {
+      pdfTitle.textContent = (title || '产品资料') + ' - PDF 预览';
+      pdfError.hidden = true;
+      pdfFrame.style.display = 'none';
+      pdfLoading.hidden = false;
+      pdfFrame.src = '';
+      openModal(pdfModal);
+      pdfFrame.onload = function () { pdfLoading.hidden = true; pdfFrame.style.display = 'block'; };
+      fetch(url, { method: 'HEAD' })
+        .then(function (res) {
+          if (!res.ok) { showPdfError('该产品的 PDF 资料暂未提供，请稍后再试或联系我们。', url); return; }
+          var ct = res.headers.get('content-type') || '';
+          if (ct.indexOf('pdf') === -1) { showPdfError('PDF 文件格式异常，无法预览。', url); return; }
+          pdfFrame.src = url;
+        })
+        .catch(function () {
+          // fetch unavailable (file:// or CORS) -> best-effort direct load
+          pdfFrame.src = url;
+          pdfLoading.hidden = true;
+          pdfFrame.style.display = 'block';
+        });
+    }
+    document.querySelectorAll('a.equipment-card-pdf').forEach(function (a) {
+      a.addEventListener('click', function (e) {
+        e.preventDefault();
+        openPdf(a.getAttribute('data-pdf'), a.getAttribute('data-title'));
+      });
+    });
+
+    // ---- Inquiry modal ----
+    var inquiryModal = document.getElementById('inquiryModal');
+    var inquiryForm = document.getElementById('inquiryForm');
+    var iqModel = document.getElementById('iq-model');
+    var iqSuccess = document.getElementById('inquirySuccess');
+    document.querySelectorAll('button.equipment-card-inquiry').forEach(function (b) {
+      b.addEventListener('click', function () {
+        inquiryForm.reset();
+        iqSuccess.hidden = true;
+        iqModel.value = b.getAttribute('data-model') || '';
+        document.getElementById('inquiryModalTitle').textContent =
+          (b.getAttribute('data-title') || '产品') + ' - 在线询价';
+        openModal(inquiryModal);
+      });
+    });
+    inquiryForm.addEventListener('submit', function (e) {
+      e.preventDefault();
+      if (!inquiryForm.checkValidity()) { inquiryForm.reportValidity(); return; }
+      // 静默提交留资：不阻塞成功提示，后端不可用时也不影响用户
+      try {
+        var fd = new FormData(inquiryForm);
+        var payload = Object.fromEntries(fd.entries());
+        payload.source = location.pathname;
+        fetch('/api/lead', {
+          method: 'POST',
+          headers: { 'content-type': 'application/json' },
+          body: JSON.stringify(payload)
+        }).catch(function () {});
+      } catch (err) {}
+      iqSuccess.hidden = false;
+      setTimeout(function () { closeModal(inquiryModal); }, 1600);
+    });
+  })();
+  </script>
+
+</body>
+</html>

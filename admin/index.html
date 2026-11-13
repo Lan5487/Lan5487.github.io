@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>用户留资 · 后台查看</title>
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif; background: #f4f6fa; color: #1f2533; }
+  .gate { position: fixed; inset: 0; display: flex; align-items: center; justify-content: center; background: #f4f6fa; }
+  .gate .card { background: #fff; padding: 32px 28px; border-radius: 12px; box-shadow: 0 8px 30px rgba(20,30,60,.12); width: 320px; }
+  .gate h1 { margin: 0 0 18px; font-size: 18px; }
+  .gate input { width: 100%; padding: 10px 12px; border: 1px solid #d6dbe6; border-radius: 8px; font-size: 14px; }
+  .gate button { margin-top: 14px; width: 100%; padding: 10px; border: 0; border-radius: 8px; background: #0b308e; color: #fff; font-size: 15px; cursor: pointer; }
+  .err { color: #e8453c; font-size: 13px; min-height: 18px; margin: 10px 0 0; }
+  .panel { max-width: 1180px; margin: 0 auto; padding: 24px 20px 60px; }
+  .panel header { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; justify-content: space-between; margin-bottom: 16px; }
+  .panel h1 { font-size: 20px; margin: 0; }
+  .tools { display: flex; align-items: center; gap: 10px; }
+  .tools button { padding: 8px 14px; border: 1px solid #d6dbe6; background: #fff; border-radius: 8px; font-size: 13px; cursor: pointer; }
+  .tools button.primary { background: #0b308e; color: #fff; border-color: #0b308e; }
+  #count { color: #6b7385; font-size: 13px; }
+  .msg { color: #e8453c; min-height: 20px; margin: 6px 0 12px; font-size: 13px; }
+  .table-wrap { overflow-x: auto; background: #fff; border-radius: 12px; box-shadow: 0 4px 18px rgba(20,30,60,.06); }
+  table { border-collapse: collapse; width: 100%; font-size: 13px; }
+  th, td { padding: 10px 12px; text-align: left; border-bottom: 1px solid #eef1f6; white-space: nowrap; }
+  th { background: #f7f9fc; color: #4a5160; font-weight: 600; position: sticky; top: 0; }
+  td.note { white-space: normal; max-width: 240px; }
+  tr:hover td { background: #fafbff; }
+  .empty { padding: 40px; text-align: center; color: #9aa2b1; }
+</style>
+</head>
+<body>
+  <div id="gate" class="gate">
+    <div class="card">
+      <h1>用户留资 · 后台查看</h1>
+      <input id="pwd" type="password" placeholder="请输入查看口令" autocomplete="off">
+      <button id="enter">进入</button>
+      <p id="gateErr" class="err"></p>
+    </div>
+  </div>
+
+  <div id="panel" class="panel" hidden>
+    <header>
+      <h1>在线询价留资</h1>
+      <div class="tools">
+        <span id="count"></span>
+        <button id="refresh">刷新</button>
+        <button id="export" class="primary">导出 CSV</button>
+        <button id="logout">退出</button>
+      </div>
+    </header>
+    <div id="msg" class="msg"></div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>提交时间</th><th>来源</th><th>公司</th><th>型号</th>
+            <th>数量</th><th>姓名</th><th>联系方式</th><th>备注</th><th>IP</th>
+          </tr>
+        </thead>
+        <tbody id="tbody"></tbody>
+      </table>
+      <div id="empty" class="empty" hidden>暂无留资记录</div>
+    </div>
+  </div>
+
+<script>
+  const TOKEN = 'TY@1234';
+  const STORE_KEY = 'lead_admin_pwd';
+  let currentRows = [];
+
+  const $ = (id) => document.getElementById(id);
+  const gate = $('gate'), panel = $('panel');
+
+  function showGate(err) {
+    panel.hidden = true;
+    gate.hidden = false;
+    $('gateErr').textContent = err || '';
+    $('pwd').value = '';
+    $('pwd').focus();
+  }
+
+  function enter() {
+    const pwd = $('pwd').value.trim();
+    if (!pwd) { $('gateErr').textContent = '请输入口令'; return; }
+    localStorage.setItem(STORE_KEY, pwd);
+    load();
+  }
+
+  async function load() {
+    const pwd = localStorage.getItem(STORE_KEY);
+    if (!pwd) return showGate();
+    $('msg').textContent = '加载中…';
+    try {
+      const res = await fetch('/api/leads', { headers: { authorization: 'Bearer ' + pwd } });
+      if (res.status === 401) {
+        localStorage.removeItem(STORE_KEY);
+        return showGate('口令错误，请重新输入');
+      }
+      if (!res.ok) {
+        // 服务端会带 { error: '...' }，如 KV 未绑定，直接展示原因
+        let detail = '';
+        try { const j = await res.json(); detail = j && j.error ? j.error : ''; } catch (_) {}
+        throw new Error(detail || ('HTTP ' + res.status));
+      }
+      const data = await res.json();
+      currentRows = Array.isArray(data) ? data : [];
+      render();
+      $('msg').textContent = '';
+    } catch (e) {
+      $('msg').textContent = '加载失败：' + e.message + '（函数需在 EdgeOne Makers 部署后才会响应）';
+    }
+  }
+
+  function esc(v) { return (v == null ? '' : String(v)); }
+
+  function fmtTime(iso) {
+    if (!iso) return '';
+    const d = new Date(iso);
+    if (isNaN(d)) return iso;
+    const p = (n) => String(n).padStart(2, '0');
+    return `${d.getFullYear()}-${p(d.getMonth()+1)}-${p(d.getDate())} ${p(d.getHours())}:${p(d.getMinutes())}:${p(d.getSeconds())}`;
+  }
+
+  function render() {
+    gate.hidden = true;
+    panel.hidden = false;
+    const tbody = $('tbody');
+    tbody.innerHTML = '';
+    $('count').textContent = `共 ${currentRows.length} 条`;
+    $('empty').hidden = currentRows.length !== 0;
+    for (const r of currentRows) {
+      const tr = document.createElement('tr');
+      const cells = [fmtTime(r.at), r.source, r.company, r.model, r.qty, r.name, r.contact, r.note, r.ip];
+      cells.forEach((c, i) => {
+        const td = document.createElement('td');
+        td.textContent = esc(c);
+        if (i === 7) td.className = 'note';
+        tr.appendChild(td);
+      });
+      tbody.appendChild(tr);
+    }
+  }
+
+  function csvCell(v) {
+    const s = esc(v);
+    return /[",\n]/.test(s) ? '"' + s.replace(/"/g, '""') + '"' : s;
+  }
+
+  function exportCsv() {
+    if (!currentRows.length) { alert('暂无数据可导出'); return; }
+    const headers = ['提交时间','来源','公司','型号','数量','姓名','联系方式','备注','IP'];
+    const lines = [headers.join(',')];
+    for (const r of currentRows) {
+      lines.push([fmtTime(r.at), r.source, r.company, r.model, r.qty, r.name, r.contact, r.note, r.ip].map(csvCell).join(','));
+    }
+    const csv = String.fromCharCode(0xFEFF) + lines.join('\r\n'); // BOM 保证 Excel 正确识别中文
+    const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'leads-' + new Date().toISOString().slice(0, 10) + '.csv';
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    URL.revokeObjectURL(url);
+  }
+
+  $('enter').addEventListener('click', enter);
+  $('pwd').addEventListener('keydown', (e) => { if (e.key === 'Enter') enter(); });
+  $('refresh').addEventListener('click', load);
+  $('export').addEventListener('click', exportCsv);
+  $('logout').addEventListener('click', () => { localStorage.removeItem(STORE_KEY); showGate(); });
+
+  // 已存口令则自动进入
+  if (localStorage.getItem(STORE_KEY)) load();
+  else showGate();
+</script>
+</body>
+</html>

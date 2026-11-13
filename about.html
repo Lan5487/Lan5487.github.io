@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>关于我们 - 天远科技集团</title>
+  <meta name="description" content="天远科技集团 - 工程机械智能化解决方案服务商">
+  <link rel="stylesheet" href="assets/css/styles.css">
+  <style>
+    :root { --u: 1px; }              /* 1 设计像素，由页面底部脚本按 .page 实际宽度换算 */
+
+    /* ============ 生态合作伙伴申请：可交互表单（叠在 mod-07 底图上） ============ */
+    .sec-eco { position: relative; }
+    .sec-eco > img { display: block; width: 100%; height: auto; }
+
+    .eco-form {
+      position: absolute;
+      left: 35%;                      /* 672 / 1920 */
+      top: 27.0432%;                  /* 278 / 1028 */
+      width: 57.5%;                   /* 1104 / 1920 */
+      height: 60.5058%;               /* 622 / 1028 */
+      box-sizing: border-box;
+      padding: calc(var(--u) * 62) calc(var(--u) * 58) calc(var(--u) * 57);
+      display: flex;
+      flex-direction: column;
+      line-height: normal;
+      margin: 0;
+    }
+
+    .eco-fields { display: flex; flex-direction: column; flex: 0 0 auto; }
+
+    .eco-row { display: grid; grid-template-columns: 1fr 1fr; gap: calc(var(--u) * 30); }
+    .eco-row + .eco-row { margin-top: calc(var(--u) * 34); }
+
+    .eco-field { display: flex; flex-direction: column; gap: calc(var(--u) * 13); position: relative; }
+    .eco-field--full { margin-top: calc(var(--u) * 34); }
+
+    .eco-label {
+      font-size: calc(var(--u) * 16);
+      line-height: 1;
+      color: #374151;
+      letter-spacing: 0;
+    }
+    .eco-label .req { color: #dc2626; margin-left: calc(var(--u) * 3); }
+
+    .eco-input,
+    .eco-select,
+    .eco-textarea {
+      width: 100%;
+      box-sizing: border-box;
+      background: #f3f4f6;
+      border: 0;
+      border-radius: calc(var(--u) * 6);
+      font-family: inherit;
+      font-size: calc(var(--u) * 16);
+      color: #111827;
+      outline: 0;
+      transition: box-shadow .18s ease, background .18s ease;
+    }
+    .eco-input,
+    .eco-select {
+      height: calc(var(--u) * 57);
+      padding: 0 calc(var(--u) * 18);
+    }
+    .eco-textarea {
+      height: calc(var(--u) * 144);
+      padding: calc(var(--u) * 16) calc(var(--u) * 18);
+      line-height: 1.7;
+      resize: none;
+    }
+    .eco-input::placeholder,
+    .eco-textarea::placeholder { color: #9ca3af; }
+
+    /* 下拉框：隐藏原生箭头，自绘 */
+    .eco-select {
+      appearance: none;
+      -webkit-appearance: none;
+      padding-right: calc(var(--u) * 44);
+      cursor: pointer;
+      background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' fill='none' stroke='%236b7280' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right calc(var(--u) * 18) center;
+      background-size: calc(var(--u) * 12) calc(var(--u) * 8);
+    }
+    /* 未选择时占位文字与输入框 placeholder 同色 */
+    .eco-select { color: #111827; }
+    .eco-select:has(> option[value=""]:checked) { color: #9ca3af; }
+
+    .eco-input:focus,
+    .eco-select:focus,
+    .eco-textarea:focus {
+      background: #eef1f5;
+      box-shadow: inset 0 0 0 calc(var(--u) * 1.5) #0b308e;
+    }
+
+    .eco-field.is-error .eco-input {
+      background: #fef2f2;
+      box-shadow: inset 0 0 0 calc(var(--u) * 1.5) #dc2626;
+    }
+    /* 错误提示绝对定位：不占流，保证固定高度的表单卡片不被撑破 */
+    .eco-error {
+      display: none;
+      position: absolute;
+      left: 0;
+      top: calc(100% + calc(var(--u) * 5));
+      font-size: calc(var(--u) * 14);
+      line-height: 1;
+      color: #dc2626;
+      white-space: nowrap;
+    }
+    .eco-field.is-error .eco-error { display: block; }
+
+    .eco-submit {
+      margin-top: calc(var(--u) * 28);
+      width: calc(var(--u) * 193);
+      height: calc(var(--u) * 62);
+      flex: 0 0 auto;
+      align-self: flex-start;
+      background: #0b308e;
+      color: #ffffff;
+      border: 0;
+      border-radius: calc(var(--u) * 6);
+      font-family: inherit;
+      font-size: calc(var(--u) * 16);
+      cursor: pointer;
+      transition: background .18s ease, opacity .18s ease;
+    }
+    .eco-submit:hover { background: #0a2a7a; }
+    .eco-submit:active { background: #082166; }
+    .eco-submit[disabled] { opacity: .72; cursor: default; }
+
+    /* 提交成功态 */
+    .eco-success {
+      display: none;
+      flex: 1;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: calc(var(--u) * 18);
+      text-align: center;
+    }
+    .eco-success__icon {
+      width: calc(var(--u) * 64);
+      height: calc(var(--u) * 64);
+      border-radius: 50%;
+      background: #e8f0fe;
+      color: #0b308e;
+      font-size: calc(var(--u) * 34);
+      line-height: calc(var(--u) * 64);
+      font-weight: 700;
+    }
+    .eco-success__title {
+      font-size: calc(var(--u) * 20);
+      color: #111827;
+      margin: 0;
+    }
+    .eco-success__desc {
+      font-size: calc(var(--u) * 15);
+      color: #6b7280;
+      margin: 0;
+    }
+    .eco-form.is-done .eco-fields { display: none; }
+    .eco-form.is-done .eco-success { display: flex; }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <div id="site-header"></div>
+<script src="assets/js/site-header.js"></script>
+    <main>
+    <section class="mod mod-00"><img src="assets/img/about/mod-00.png" alt="关于我们"></section>
+    <section class="mod mod-01"><img src="assets/img/about/mod-01.png" alt="企业简介与业务领域"></section>
+    <section class="mod mod-02"><img src="assets/img/about/mod-02.png" alt="组织架构 - 商贸板块"></section>
+    <section class="mod mod-03"><img src="assets/img/about/mod-03.png" alt="组织架构 - 科技与制造服务板块"></section>
+    <section class="mod mod-04"><img src="assets/img/about/mod-04.png" alt="代理品牌一览表"></section>
+    <section class="mod mod-05"><img src="assets/img/about/mod-05.png" alt="合作机构"></section>
+    <section class="mod mod-06"><img src="assets/img/about/mod-06.png" alt="战略合作伙伴"></section>
+    <section class="mod mod-07 sec-eco">
+      <img src="assets/img/about/mod-07.png" alt="生态合作伙伴申请">
+      <form class="eco-form" id="ecoForm" novalidate>
+        <div class="eco-fields">
+          <div class="eco-row">
+            <label class="eco-field" for="ecoCompany">
+              <span class="eco-label">公司名称</span>
+              <input class="eco-input" id="ecoCompany" name="company" type="text" autocomplete="organization" placeholder="请输入公司名称">
+            </label>
+            <label class="eco-field" for="ecoContact">
+              <span class="eco-label">联系人</span>
+              <input class="eco-input" id="ecoContact" name="contact" type="text" autocomplete="name" placeholder="请输入联系人姓名">
+            </label>
+          </div>
+          <div class="eco-row">
+            <label class="eco-field" id="ecoPhoneField" for="ecoPhone">
+              <span class="eco-label">联系电话<span class="req">*</span></span>
+              <input class="eco-input" id="ecoPhone" name="phone" type="tel" autocomplete="tel" placeholder="请输入联系电话" aria-describedby="ecoPhoneError" required>
+              <span class="eco-error" id="ecoPhoneError">请填写联系电话</span>
+            </label>
+            <label class="eco-field" for="ecoType">
+              <span class="eco-label">合作类型</span>
+              <select class="eco-select" id="ecoType" name="type">
+                <option value="" selected>请选择合作类型</option>
+                <option value="代理产品">代理产品</option>
+                <option value="技术集成">技术集成</option>
+                <option value="联合方案">联合方案</option>
+                <option value="其他">其他</option>
+              </select>
+            </label>
+          </div>
+          <label class="eco-field eco-field--full" for="ecoMessage">
+            <span class="eco-label">留言</span>
+            <textarea class="eco-textarea" id="ecoMessage" name="message" placeholder="请简要描述您的合作意向"></textarea>
+          </label>
+          <button class="eco-submit" type="submit" id="ecoSubmit">提交申请</button>
+        </div>
+        <div class="eco-success" role="status" aria-live="polite">
+          <div class="eco-success__icon">✓</div>
+          <p class="eco-success__title">提交成功</p>
+          <p class="eco-success__desc">我们已收到您的申请，会尽快与您联系。</p>
+        </div>
+      </form>
+    </section>
+    </main>
+
+    <div id="site-footer-new"></div>
+    <script src="assets/js/site-footer.js"></script>
+
+  </div>
+
+  <script>
+    /* 1 设计像素：按 .page 实际渲染宽度 / 1920 换算，保证表单与底图同步缩放 */
+    (function () {
+      var page = document.querySelector('.page');
+      function syncUnit() {
+        var w = (page && page.clientWidth) || 1920;
+        document.documentElement.style.setProperty('--u', (w / 1920) + 'px');
+      }
+      syncUnit();
+      window.addEventListener('resize', syncUnit);
+      window.addEventListener('load', syncUnit);
+    })();
+
+    /* 生态合作伙伴申请表单：仅「联系电话」必填 */
+    (function () {
+      var form = document.getElementById('ecoForm');
+      if (!form) { return; }
+      var phone = document.getElementById('ecoPhone');
+      var phoneField = document.getElementById('ecoPhoneField');
+      var errorEl = document.getElementById('ecoPhoneError');
+      var submitBtn = document.getElementById('ecoSubmit');
+      var submitting = false;
+
+      function setError(on, msg) {
+        phoneField.classList.toggle('is-error', !!on);
+        phone.setAttribute('aria-invalid', on ? 'true' : 'false');
+        if (msg) { errorEl.textContent = msg; }
+      }
+
+      phone.addEventListener('input', function () {
+        if (phoneField.classList.contains('is-error') && phone.value.trim() !== '') {
+          setError(false);
+        }
+      });
+
+      form.addEventListener('submit', function (e) {
+        e.preventDefault();
+        if (submitting) { return; }
+
+        if (phone.value.trim() === '') {
+          setError(true, '请填写联系电话');
+          phone.focus();
+          return;
+        }
+        setError(false);
+
+        submitting = true;
+        submitBtn.disabled = true;
+        submitBtn.textContent = '提交中…';
+
+        window.setTimeout(function () {
+          form.classList.add('is-done');
+          submitting = false;
+        }, 600);
+      });
+    })();
+  </script>
+</body>
+</html>

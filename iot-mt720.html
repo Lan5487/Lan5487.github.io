@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MT720 车载无终端 - 物联网终端 - 天远科技集团</title>
+  <style>
+    :root {
+      --header-h: 115px;
+      --primary: #0b308e;
+      --text: #3f3f3f;
+      --phone: #949494;
+      --bg: #ffffff;
+      --max-w: 1920px;
+    }
+
+    * { box-sizing: border-box; }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", "Hiragino Sans GB", sans-serif;
+      background: #f5f5f5;
+      color: var(--text);
+    }
+
+    .page {
+      max-width: var(--max-w);
+      margin: 0 auto;
+      background: var(--bg);
+      overflow: hidden;
+    }
+
+    /* ===== 顶部导航（HTML 公共模块，sticky） ===== */
+    .site-header {
+      position: sticky;
+      top: 0;
+      height: var(--header-h);
+      background: rgba(255, 255, 255, 0.98);
+      z-index: 100;
+    }
+
+    .header-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 100%;
+      padding: 0 80px;
+    }
+
+    .logo a {
+      display: flex;
+      align-items: center;
+      height: var(--header-h);
+    }
+
+    .logo img {
+      display: block;
+      width: 260px;
+      height: auto;
+    }
+
+    .main-nav {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+    }
+
+    .main-nav ul {
+      display: flex;
+      align-items: center;
+      gap: 84px;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    .main-nav li { position: relative; }
+
+    .main-nav a {
+      display: block;
+      font-size: 18px;
+      line-height: var(--header-h);
+      color: var(--text);
+      text-decoration: none;
+      white-space: nowrap;
+      transition: color 0.2s;
+    }
+
+    .main-nav li.active > a { color: var(--primary); }
+
+    .main-nav li.active::after {
+      content: "";
+      position: absolute;
+      bottom: 7px;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: var(--primary);
+      border-radius: 2px;
+    }
+
+    .main-nav li:hover > a { color: var(--primary); }
+
+    .dropdown {
+      display: none;
+      position: absolute;
+      top: calc(var(--header-h) - 8px);
+      left: 50%;
+      transform: translateX(-50%);
+      min-width: 220px;
+      background: #ffffff;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+      border-radius: 4px;
+      padding: 8px 0;
+    }
+
+    .main-nav li:hover .dropdown { display: block; }
+
+    .dropdown a {
+      display: block;
+      padding: 10px 24px;
+      line-height: 1.5;
+      font-size: 15px;
+      color: var(--text);
+    }
+
+    .dropdown a:hover {
+      color: var(--primary);
+      background: #f7f8fa;
+    }
+
+    .phone {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 18px;
+      color: var(--phone);
+      white-space: nowrap;
+    }
+
+    .phone-icon {
+      width: 20px;
+      height: 20px;
+      fill: none;
+      stroke: currentColor;
+      stroke-width: 1.6;
+    }
+
+    /* ===== 面包屑导航 ===== */
+    .breadcrumb {
+      max-width: var(--max-w);
+      margin: 0 auto;
+      padding: 20px 80px 0;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 14px;
+      color: var(--phone);
+      background: var(--bg);
+      flex-wrap: wrap;
+    }
+
+    .breadcrumb a {
+      color: var(--text);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .breadcrumb a:hover {
+      color: var(--primary);
+    }
+
+    .breadcrumb .sep {
+      color: var(--phone);
+    }
+
+    .breadcrumb .current {
+      color: var(--primary);
+      font-weight: 500;
+    }
+
+    /* ===== 返回按钮 ===== */
+    .back-link {
+      max-width: var(--max-w);
+      margin: 0 auto;
+      padding: 16px 80px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 14px;
+      color: var(--primary);
+      text-decoration: none;
+      background: var(--bg);
+      transition: color 0.2s;
+    }
+
+    .back-link:hover {
+      color: #082466;
+      text-decoration: underline;
+    }
+
+    /* ===== 详情页各模块（按设计图大区块） ===== */
+    .section {
+      width: 100%;
+      line-height: 0;
+    }
+
+    .section img {
+      display: block;
+      width: 100%;
+      height: auto;
+    }
+
+    /* ===== 产品主体：多角度缩略图联动（几何按设计稿 1920×759 等比换算，故所有坐标都能整除） ===== */
+    .mt-band {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 1920 / 759;
+    }
+
+    /* 右侧文案块（MT720 标题 / 典型应用 / 在线询价，整块图保留设计稿排版，本次未改动） */
+    .mt-band .mt-copy {
+      position: absolute;
+      left: 54.687500%;    /* x 1050 / 1920 */
+      top: 0;
+      width: 45.312500%;   /* 870 / 1920 */
+      height: auto;
+    }
+
+    /* 左侧缩略图列 */
+    .mt-band .mt-thumbs {
+      position: absolute;
+      /* 8.333333% 在浏览器布局单位(1/64px)下会被向下取整到 159.98px，导致 1px 描边整体左移 1px；
+         取 8.33334% 可让换算结果刚好落在 160.00px 上（误差 0.0001px，不可见） */
+      left: 8.33334%;      /* x 160 / 1920 */
+      top: 0;
+      width: 7.916667%;    /* w 152 / 1920 */
+      height: 100%;
+    }
+
+    .mt-band .mt-thumb {
+      position: absolute;
+      left: 0;
+      width: 100%;
+      height: 13.702240%;  /* h 104 / 759 */
+      padding: 0;
+      margin: 0;
+      background: #ffffff;
+      border: 1px solid #dadada;   /* 未选中：设计稿取样 rgb(218,218,218) */
+      border-radius: 0;
+      cursor: pointer;
+      overflow: hidden;
+      transition: border-color 0.2s ease;
+    }
+
+    .mt-band .mt-thumb:nth-child(1) { top: 22.266140%; }   /* y 811 */
+    .mt-band .mt-thumb:nth-child(2) { top: 36.495389%; }   /* y 919 */
+    .mt-band .mt-thumb:nth-child(3) { top: 50.724638%; }   /* y 1027 */
+
+    .mt-band .mt-thumb.is-active {
+      border-color: #0b308e;       /* 选中：设计稿取样 rgb(11,48,142) */
+    }
+
+    .mt-band .mt-thumb:focus-visible {
+      outline: 2px solid var(--primary);
+      outline-offset: 2px;
+    }
+
+    .mt-band .mt-thumb img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+
+    /* 主预览区：三张角度图叠放；切换时新图在上层淡入，旧图保持不透明压在其下 → 不闪烁、不留白 */
+    .mt-band .mt-stage {
+      position: absolute;
+      left: 19.791667%;    /* x 380 / 1920 */
+      top: 28.721990%;     /* y 218 / 759 */
+      width: 29.687500%;   /* w 570 / 1920 */
+      height: 52.042161%;  /* h 395 / 759 */
+    }
+
+    .mt-band .mt-view {
+      position: absolute;
+      inset: 0;
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      opacity: 0;
+      z-index: 1;
+      transition: opacity 0.3s ease;
+    }
+
+    .mt-band .mt-view.is-current {
+      opacity: 1;
+      z-index: 3;
+    }
+
+    .mt-band .mt-view.is-outgoing {
+      opacity: 1;
+      z-index: 2;
+    }
+
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+
+    /* ===== 基础响应式 ===== */
+    @media (max-width: 1200px) {
+      .header-inner { padding: 0 24px; }
+      .main-nav ul { gap: 32px; }
+      .breadcrumb, .back-link { padding-left: 24px; padding-right: 24px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+
+    <!-- 顶部导航（HTML 公共模块，sticky 吸顶） -->
+    <div id="site-header"></div>
+<script src="assets/js/site-header.js"></script>
+
+    <!-- 面包屑导航（HTML 元素） -->
+    <nav class="breadcrumb" aria-label="面包屑">
+      <a href="index.html">首页</a>
+      <span class="sep">›</span>
+      <a href="scene-1.html">产品与服务</a>
+      <span class="sep">›</span>
+      <a href="product-iot.html">物联网终端</a>
+      <span class="sep">›</span>
+      <span class="current">MT720</span>
+    </nav>
+
+    <!-- 返回入口（HTML 元素） -->
+    <a href="product-iot.html" class="back-link" aria-label="返回产品列表">‹ 返回产品列表</a>
+
+    <!-- 详情页主体：4 个大区块（与设计稿大模块一一对应） -->
+
+    <!-- 模块 1：蓝色科技 Banner（PRODUCTS & SERVICES / 物联终端） -->
+    <section class="section" id="banner">
+      <img src="assets/img/product-iot/iot-subpage-hero.png" alt="天远科技集团 车载无线终端">
+    </section>
+
+    <!-- 模块 2：产品主体（多角度缩略图联动：3 缩略图 + 1 大主图 + 典型应用 + 在线询价） -->
+    <section class="section mt-band inquiry-host" id="product" data-mt-gallery aria-label="MT720 车载无线终端产品信息">
+      <!-- 右侧文案块（标题 / 典型应用 / 在线询价，按设计稿整块保留，未作改动） -->
+      <img class="mt-copy" src="assets/img/product-iot/mt720/mt720-copy.png" alt="MT720 车载无线终端 - 典型应用：电动化液压挖掘机、电动化液压装载机、挖掘机、装载机、智控电源、智能供电车、小型施工设备；含在线询价按钮">
+
+      <!-- 左侧多角度缩略图：默认第 1 项选中（蓝框），其余灰框 -->
+      <div class="mt-thumbs" role="group" aria-label="MT720 多角度产品图切换">
+        <button type="button" class="mt-thumb is-active" aria-pressed="true" aria-label="查看 MT720 斜侧视角">
+          <img src="assets/img/product-iot/mt720/mt720-thumb-1.png" alt="MT720 斜侧视角缩略图">
+        </button>
+        <button type="button" class="mt-thumb" aria-pressed="false" aria-label="查看 MT720 正面接口视角">
+          <img src="assets/img/product-iot/mt720/mt720-thumb-2.png" alt="MT720 正面接口视角缩略图">
+        </button>
+        <button type="button" class="mt-thumb" aria-pressed="false" aria-label="查看 MT720 背面视角">
+          <img src="assets/img/product-iot/mt720/mt720-thumb-3.png" alt="MT720 背面视角缩略图">
+        </button>
+      </div>
+
+      <!-- 右侧主预览区：三层叠放，click 后新图淡入 -->
+      <div class="mt-stage">
+        <img class="mt-view is-current" src="assets/img/product-iot/mt720/mt720-view-1.png" alt="MT720 车载无线终端 斜侧视角大图">
+        <img class="mt-view" src="assets/img/product-iot/mt720/mt720-view-2.png" alt="MT720 车载无线终端 正面接口视角大图" aria-hidden="true">
+        <img class="mt-view" src="assets/img/product-iot/mt720/mt720-view-3.png" alt="MT720 车载无线终端 背面视角大图" aria-hidden="true">
+      </div>
+    
+      <button type="button" class="js-inquiry" data-model="MT720" data-title="MT720 车载无线终端" style="left:54.6875%;top:84.18972332015811%;width:13.59375%;height:7.378129117259552%;" aria-label="MT720 车载无线终端 在线询价" title="在线询价"></button>
+    </section>
+
+    <!-- 模块 3：核心规格参数表（5 行 3 列：序号 / Parameters / 描述） -->
+    <section class="section" id="specs">
+      <img src="assets/img/product-iot/mt720/mt720-specs.png" alt="MT720 核心规格参数表">
+    </section>
+
+    <!-- 模块 4：整站页脚（与一级页 footer 视觉一致） -->
+    <div id="site-footer-new"></div>
+    <script src="assets/js/site-footer.js"></script>
+
+  </div>
+
+  <!-- 产品多角度缩略图联动：纯原生、无依赖；三张角度图随页面一同加载，点击只切 class，故不会闪烁或出现空白 -->
+  <script>
+    (function () {
+      var root = document.querySelector('[data-mt-gallery]');
+      if (!root) return;
+
+      // 顺序必须一致：mt-thumb 的第 i 个 ↔ mt-view 的第 i 个
+      var thumbs = Array.prototype.slice.call(root.querySelectorAll('.mt-thumb'));
+      var views = Array.prototype.slice.call(root.querySelectorAll('.mt-view'));
+      var cur = 0;
+
+      function select(i) {
+        if (i === cur || !views[i]) return;
+
+        thumbs.forEach(function (btn, k) {
+          var on = (k === i);
+          btn.classList.toggle('is-active', on);
+          btn.setAttribute('aria-pressed', on ? 'true' : 'false');
+        });
+
+        views.forEach(function (view, k) {
+          view.classList.remove('is-current', 'is-outgoing');
+          if (k === i) {
+            view.classList.add('is-current');           // 新图置于最上层，淡入
+            view.removeAttribute('aria-hidden');
+          } else if (k === cur) {
+            view.classList.add('is-outgoing');          // 旧图保持不透明，压在新图下面
+            view.setAttribute('aria-hidden', 'true');
+          } else {
+            view.setAttribute('aria-hidden', 'true');
+          }
+        });
+
+        cur = i;
+      }
+
+      thumbs.forEach(function (btn, i) {
+        btn.addEventListener('click', function () { select(i); });
+      });
+    })();
+  </script>
+<script src="assets/js/inquiry-modal.js"></script>
+</body>
+</html>

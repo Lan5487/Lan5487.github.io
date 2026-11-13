@@ -1,0 +1,748 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>新能源改装应用案例</title>
+<style>
+  :root {
+    --blue: #0B308E;
+    --blue-deep: #051442;
+    --blue-bright: #164FBF;
+    --ink: #101828;
+    --gray: #475467;
+    --line: #E3E8F2;
+    --bg-soft: #F7F9FE;
+  }
+
+  * { box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    margin: 0;
+    background: #fff;
+    color: var(--ink);
+    font-family: "PingFang SC", "Microsoft YaHei", "Hiragino Sans GB",
+                 "Source Han Sans SC", system-ui, -apple-system, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  img { display: block; max-width: 100%; }
+
+  .wrap {
+    width: calc(100% - 64px);
+    max-width: 1600px;
+    margin: 0 auto;
+  }
+
+  /* ---------- 首屏 ---------- */
+  .hero {
+    background: linear-gradient(128deg, var(--blue-deep) 0%, #0A308E 60%, var(--blue-bright) 100%);
+    padding: 104px 0 112px;
+  }
+
+  .hero-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 620px;
+    gap: 80px;
+    align-items: center;
+  }
+
+  .tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 9px 18px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.13);
+    color: #fff;
+    font-size: 15px;
+    letter-spacing: .4px;
+  }
+
+  .tag::before {
+    content: "";
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: #00A3FF;
+    box-shadow: 0 0 10px #00A3FF;
+  }
+
+  .hero h1 {
+    margin: 30px 0 26px;
+    font-size: 64px;
+    line-height: 1.16;
+    font-weight: 700;
+    letter-spacing: 1px;
+    color: #fff;
+  }
+
+  .hero .lead {
+    margin: 0;
+    max-width: 760px;
+    font-size: 17px;
+    line-height: 1.95;
+    color: rgba(255, 255, 255, 0.76);
+  }
+
+  .hero-figure {
+    margin: 0;
+    border-radius: 20px;
+    overflow: hidden;
+    aspect-ratio: 16 / 10;
+  }
+
+  .hero-figure img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  /* ---------- 总览 ---------- */
+  .overview {
+    background: var(--bg-soft);
+    padding: 92px 0 88px;
+  }
+
+  .eyebrow {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--blue);
+    letter-spacing: .5px;
+  }
+
+  .eyebrow::before {
+    content: "";
+    width: 5px;
+    height: 18px;
+    border-radius: 2px;
+    background: var(--blue);
+  }
+
+  .overview h2 {
+    margin: 22px 0 44px;
+    font-size: 46px;
+    line-height: 1.3;
+    font-weight: 700;
+    letter-spacing: .5px;
+    color: var(--ink);
+  }
+
+  .cards {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 24px;
+  }
+
+  .card {
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    padding: 26px 24px;
+    transition: transform .28s ease, box-shadow .28s ease, border-color .28s ease;
+  }
+
+  .card:hover {
+    transform: translateY(-4px);
+    border-color: #C9D6F0;
+    box-shadow: 0 14px 32px rgba(11, 48, 142, .10);
+  }
+
+  .card .idx {
+    font-size: 14px;
+    color: #8A94A6;
+    letter-spacing: .5px;
+  }
+
+  .card .model {
+    margin: 12px 0 10px;
+    font-size: 21px;
+    font-weight: 700;
+    color: var(--ink);
+    letter-spacing: .2px;
+  }
+
+  .card .type {
+    font-size: 15px;
+    color: var(--gray);
+  }
+
+  .card .kwh {
+    margin-top: 18px;
+    padding-top: 18px;
+    border-top: 1px solid var(--line);
+    font-size: 15px;
+    color: var(--gray);
+  }
+
+  /* ---------- 案例 ---------- */
+  .case { padding: 96px 0; }
+
+  .case--alt { background: var(--bg-soft); }
+
+  .case-head { margin-bottom: 44px; }
+
+  .case-head .idx {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--blue);
+    letter-spacing: .5px;
+  }
+
+  .case-head .idx::before {
+    content: "";
+    width: 5px;
+    height: 18px;
+    border-radius: 2px;
+    background: var(--blue);
+  }
+
+  .case-head h3 {
+    margin: 18px 0 0;
+    font-size: 40px;
+    line-height: 1.3;
+    font-weight: 700;
+    letter-spacing: .5px;
+    color: var(--ink);
+  }
+
+  .case-grid {
+    display: grid;
+    grid-template-columns: 620px minmax(0, 1fr);
+    gap: 64px;
+    align-items: stretch;
+  }
+
+  .case--alt .case-grid {
+    grid-template-columns: minmax(0, 1fr) 620px;
+  }
+
+  .case--alt .media { order: 2; }
+
+  .media {
+    position: relative;
+    min-height: 380px;
+    border-radius: 18px;
+    overflow: hidden;
+    background: #E9EEF8;
+  }
+
+  .media img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform .7s ease;
+  }
+
+  .media:hover img { transform: scale(1.03); }
+
+  .content h4 {
+    margin: 0 0 14px;
+    font-size: 21px;
+    font-weight: 700;
+    color: var(--ink);
+    letter-spacing: .3px;
+  }
+
+  .content .effect {
+    margin: 0 0 36px;
+    font-size: 16px;
+    line-height: 1.95;
+    color: var(--gray);
+  }
+
+  .steps {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .steps li {
+    display: flex;
+    gap: 18px;
+    font-size: 16px;
+    line-height: 1.95;
+    color: var(--gray);
+  }
+
+  .steps .num {
+    flex: 0 0 26px;
+    color: var(--ink);
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* 规格带 */
+  .spec {
+    margin-top: 44px;
+    display: flex;
+    align-items: stretch;
+    gap: 0;
+    background: var(--bg-soft);
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    padding: 24px 8px 24px 32px;
+  }
+
+  .case--alt .spec { background: #fff; }
+
+  .spec-title {
+    flex: 0 0 auto;
+    align-self: center;
+    padding-right: 32px;
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--blue);
+    letter-spacing: .3px;
+    white-space: nowrap;
+  }
+
+  .spec-list {
+    flex: 1 1 auto;
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    align-items: center;
+  }
+
+  .spec-item {
+    padding: 4px 24px;
+    border-left: 1px solid var(--line);
+  }
+
+  .spec-item .k {
+    display: block;
+    margin-bottom: 6px;
+    font-size: 13px;
+    color: #8A94A6;
+    letter-spacing: .3px;
+  }
+
+  .spec-item .v {
+    display: block;
+    font-size: 17px;
+    font-weight: 600;
+    color: var(--ink);
+    letter-spacing: .2px;
+  }
+
+  .spec-note {
+    flex: 0 0 380px;
+    margin: 0;
+    padding: 4px 12px 4px 28px;
+    border-left: 1px solid var(--line);
+    font-size: 15px;
+    line-height: 1.85;
+    color: var(--gray);
+  }
+
+  .spec-note .k {
+    display: block;
+    margin-bottom: 6px;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--blue);
+    letter-spacing: .3px;
+  }
+
+  /* ---------- 底部转化 ---------- */
+  .cta {
+    background: var(--blue);
+    padding: 76px 0;
+  }
+
+  .cta-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 60px;
+  }
+
+  .cta h2 {
+    margin: 0 0 16px;
+    font-size: 40px;
+    line-height: 1.3;
+    font-weight: 700;
+    letter-spacing: .5px;
+    color: #fff;
+  }
+
+  .cta p {
+    margin: 0;
+    font-size: 16px;
+    line-height: 1.8;
+    color: rgba(255, 255, 255, 0.75);
+  }
+
+  .btn {
+    flex: 0 0 auto;
+    display: inline-block;
+    padding: 18px 40px;
+    border: 0;
+    border-radius: 10px;
+    background: #fff;
+    color: var(--blue);
+    font-size: 17px;
+    font-weight: 600;
+    font-family: inherit;
+    letter-spacing: .5px;
+    cursor: pointer;
+    transition: transform .25s ease, box-shadow .25s ease;
+  }
+
+  .btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 28px rgba(0, 0, 0, .18);
+  }
+
+  /* ---------- 响应式 ---------- */
+  @media (max-width: 1500px) {
+    .spec-note { flex-basis: 320px; }
+    .spec-item { padding: 4px 16px; }
+    .spec-title { padding-right: 24px; }
+  }
+
+  @media (max-width: 1400px) {
+    .hero-grid { grid-template-columns: minmax(0, 1fr) 520px; gap: 56px; }
+    .hero h1 { font-size: 56px; }
+    .case-grid { grid-template-columns: 520px minmax(0, 1fr); gap: 52px; }
+    .case--alt .case-grid { grid-template-columns: minmax(0, 1fr) 520px; }
+    .cards { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .spec { flex-wrap: wrap; gap: 20px; padding: 24px 26px; }
+    .spec-list { grid-template-columns: repeat(5, minmax(0, 1fr)); flex-basis: 100%; }
+    .spec-item:first-child { border-left: 0; padding-left: 0; }
+    .spec-note { flex-basis: 100%; border-left: 0; padding: 20px 0 0; border-top: 1px solid var(--line); }
+  }
+
+  @media (max-width: 1024px) {
+    .hero { padding: 72px 0 80px; }
+    .hero-grid,
+    .case-grid,
+    .case--alt .case-grid {
+      grid-template-columns: minmax(0, 1fr);
+      gap: 36px;
+    }
+    .case--alt .media { order: 0; }
+    .media { min-height: 0; aspect-ratio: 16 / 10; }
+    .hero-figure { max-width: 620px; }
+    .hero h1 { font-size: 44px; }
+    .overview h2 { font-size: 34px; }
+    .case-head h3 { font-size: 31px; }
+    .cards { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .case { padding: 68px 0; }
+    .spec-list { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px 0; }
+    .spec-item:nth-child(odd) { border-left: 0; padding-left: 0; }
+    .cta-inner { flex-direction: column; align-items: flex-start; gap: 32px; }
+    .cta h2 { font-size: 30px; }
+  }
+
+  @media (max-width: 640px) {
+    .wrap { width: calc(100% - 40px); }
+    .hero h1 { font-size: 34px; }
+    .overview h2 { font-size: 26px; }
+    .case-head h3 { font-size: 25px; }
+    .cards { grid-template-columns: minmax(0, 1fr); }
+    .spec-list { grid-template-columns: minmax(0, 1fr); }
+    .spec-item { border-left: 0; padding-left: 0; }
+  }
+</style>
+</head>
+<body>
+
+<div id="site-header"></div>
+<script>window.SITE_NAV_KEY='case';</script>
+<script src="assets/js/site-header.js"></script>
+
+  <!-- 首屏 -->
+  <section class="hero">
+    <div class="wrap">
+      <div class="hero-grid">
+        <div>
+          <span class="tag">客户案例 · 新能源改装</span>
+          <h1>新能源改装应用案例</h1>
+          <p class="lead">面向挖掘机、装载机等工程机械，通过拆除原车发动机并安装新能源电机、电控与智能供电系统，实现由燃油驱动向电力驱动升级，环保节能的同时大幅降低能耗与维修费用。</p>
+        </div>
+        <figure class="hero-figure">
+          <img src="assets/img/case-newenergy/hero.jpg" alt="新能源改装工程机械作业场景">
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- 五大改造案例总览 -->
+  <section class="overview">
+    <div class="wrap">
+      <div class="eyebrow">五大改造案例总览</div>
+      <h2>覆盖挖掘机与装载机，吨级从 5T 到 125T</h2>
+
+      <div class="cards">
+        <article class="card">
+          <div class="idx">案例一</div>
+          <div class="model">小松 PC1250LC-8</div>
+          <div class="type">125T 挖掘机</div>
+          <div class="kwh">改造后电耗：300 kWh/h</div>
+        </article>
+        <article class="card">
+          <div class="idx">案例二</div>
+          <div class="model">小松 PC65LC-8E0</div>
+          <div class="type">65T 挖掘机</div>
+          <div class="kwh">改造后电耗：120 kWh/h</div>
+        </article>
+        <article class="card">
+          <div class="idx">案例三</div>
+          <div class="model">柳工 CL855</div>
+          <div class="type">5T 装载机</div>
+          <div class="kwh">改造后电耗：40 kWh/h</div>
+        </article>
+        <article class="card">
+          <div class="idx">案例四</div>
+          <div class="model">沃尔沃 VCEC360</div>
+          <div class="type">36T 挖掘机</div>
+          <div class="kwh">改造后电耗：82 kWh/h</div>
+        </article>
+        <article class="card">
+          <div class="idx">案例五</div>
+          <div class="model">小松 WA470-6</div>
+          <div class="type">7T 装载机</div>
+          <div class="kwh">改造后电耗：65 kWh/h</div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- 案例一 -->
+  <section class="case">
+    <div class="wrap">
+      <header class="case-head">
+        <div class="idx">案例一</div>
+        <h3>小松 PC1250LC-8 · 125T 挖掘机</h3>
+      </header>
+
+      <div class="case-grid">
+        <figure class="media">
+          <img src="assets/img/case-newenergy/case1.jpg" alt="125T 挖掘机新能源改装作业场景">
+        </figure>
+
+        <div class="content">
+          <h4>使用效果</h4>
+          <p class="effect">改造升级后，电耗为 300 kWh/h，不仅环保还大大节省了能耗和维修费用。</p>
+
+          <h4>方案介绍</h4>
+          <ol class="steps">
+            <li><span class="num">01</span><span>该方案为 125T 挖掘机下拖电方案；</span></li>
+            <li><span class="num">02</span><span>拆除车辆原发动机安装新能源永磁同步水冷电机、电控，电机直接与 PTO 相连，为车辆提供动力，采用新能源五合一控制器驱动主驱电机，为车辆 24V 充电，采用新能源空调冷风一体机和暖风一体机实现空调冷暖风。原车散热系统不变，原车水箱给安装的电机、电控散热，另外安装一套电机、电控驱动散热风扇。</span></li>
+            <li><span class="num">03</span><span>供电系统 6000V 市电供给送电车（车上配有电动行走系统，可遥控控制行走），送电车输出 600V 直流电供给挖掘机，挖掘机底盘安装收线器（遥控控制可收放 300 米电缆），通过车体油电一体电滑环（支持 360° 旋转）给车辆供电。车辆安装有 400kWh 新能源电池，用于短距离转场。</span></li>
+          </ol>
+        </div>
+      </div>
+
+      <div class="spec">
+        <div class="spec-title">技术参数</div>
+        <div class="spec-list">
+          <div class="spec-item"><span class="k">品牌</span><span class="v">小松</span></div>
+          <div class="spec-item"><span class="k">机种</span><span class="v">挖掘机</span></div>
+          <div class="spec-item"><span class="k">吨级</span><span class="v">125T</span></div>
+          <div class="spec-item"><span class="k">机型</span><span class="v">PC1250LC-8</span></div>
+          <div class="spec-item"><span class="k">电耗</span><span class="v">300 kWh/h</span></div>
+        </div>
+        <p class="spec-note"><span class="k">适用对象</span>90T 以上挖掘机，工作半径大，有转场需求。</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 案例二 -->
+  <section class="case case--alt">
+    <div class="wrap">
+      <header class="case-head">
+        <div class="idx">案例二</div>
+        <h3>小松 PC65LC-8E0 · 65T 挖掘机</h3>
+      </header>
+
+      <div class="case-grid">
+        <figure class="media">
+          <img src="assets/img/case-newenergy/case2.jpg" alt="65T 挖掘机新能源改装作业场景">
+        </figure>
+
+        <div class="content">
+          <h4>使用效果</h4>
+          <p class="effect">改造升级后，电耗为 120 kWh/h，不仅环保还大大节省了能耗和维修费用。</p>
+
+          <h4>方案介绍</h4>
+          <ol class="steps">
+            <li><span class="num">01</span><span>该方案为 65T 挖掘机上拖电方案；</span></li>
+            <li><span class="num">02</span><span>拆除车辆原发动机安装新能源永磁同步水冷电机、电控，电机直接与 PTO 相连，为车辆提供动力，采用新能源五合一控制器驱动主驱电机，为车辆 24V 充电，采用新能源空调冷风一体机和暖风一体机实现空调冷暖风。原车散热系统不变，原车水箱给安装的电机、电控散热，风扇驱动使用原车的风扇马达驱动。</span></li>
+            <li><span class="num">03</span><span>供电系统 380V 市电供给智控电源，智控电源输出 600V 直流电通过全智能自动收线器供给挖掘机，电缆悬空供电，可随车辆移动自动收放线缆，线缆始终处于悬空状态，车上安装授电杆，授电杆上部安装电滑环（支持 360° 旋转）。车辆可 360° 旋转工作，工作半径 50 米。</span></li>
+            <li><span class="num">04</span><span>全智能自动收线器采用独有的双轮双线设计，为行业独创，解决了大机型无法上供电的行业难题。</span></li>
+          </ol>
+        </div>
+      </div>
+
+      <div class="spec">
+        <div class="spec-title">技术参数</div>
+        <div class="spec-list">
+          <div class="spec-item"><span class="k">品牌</span><span class="v">小松</span></div>
+          <div class="spec-item"><span class="k">机种</span><span class="v">挖掘机</span></div>
+          <div class="spec-item"><span class="k">吨级</span><span class="v">65T</span></div>
+          <div class="spec-item"><span class="k">机型</span><span class="v">PC65LC-8E0</span></div>
+          <div class="spec-item"><span class="k">电耗</span><span class="v">120 kWh/h</span></div>
+        </div>
+        <p class="spec-note"><span class="k">适用对象</span>60T 左右挖掘机，工作场景固定，电缆不能拖地，需要悬空供电。</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 案例三 -->
+  <section class="case">
+    <div class="wrap">
+      <header class="case-head">
+        <div class="idx">案例三</div>
+        <h3>柳工 CL855 · 5T 装载机</h3>
+      </header>
+
+      <div class="case-grid">
+        <figure class="media">
+          <img src="assets/img/case-newenergy/case3.jpg" alt="5T 装载机新能源改装作业场景">
+        </figure>
+
+        <div class="content">
+          <h4>使用效果</h4>
+          <p class="effect">改造升级后，电耗为 40 kWh/h，不仅环保还大大节省了能耗和维修费用。</p>
+
+          <h4>方案介绍</h4>
+          <ol class="steps">
+            <li><span class="num">01</span><span>该方案为 5T 装载机上拖电方案；</span></li>
+            <li><span class="num">02</span><span>拆除车辆原发动机安装新能源永磁同步水冷电机、电控，电机直接与变速箱相连，为车辆提供动力，采用新能源五合一控制器驱动主驱电机，为车辆 24V 充电，采用新能源空调冷风一体机和暖风一体机实现空调冷暖风，安装气泵一体机为车辆刹车提供动力。原车散热系统不变，原车水箱给安装的电机、电控散热，另外安装一套电机、电控驱动散热风扇。</span></li>
+            <li><span class="num">03</span><span>供电系统 380V 市电供给智控电源，智控电源输出 600V 直流电通过全智能自动收线器供给装载机，电缆悬空供电，可随车辆移动自动收放线缆，线缆始终处于悬空状态，车上安装授电杆，授电杆上部安装电滑环（支持 360° 旋转）。车辆可 360° 旋转工作，工作半径 50 米。</span></li>
+            <li><span class="num">04</span><span>全智能收线器采用专用于装载机的快速收线器，最大收线速度可达 30 kW/h。</span></li>
+          </ol>
+        </div>
+      </div>
+
+      <div class="spec">
+        <div class="spec-title">技术参数</div>
+        <div class="spec-list">
+          <div class="spec-item"><span class="k">品牌</span><span class="v">柳工</span></div>
+          <div class="spec-item"><span class="k">机种</span><span class="v">装载机</span></div>
+          <div class="spec-item"><span class="k">吨级</span><span class="v">5T</span></div>
+          <div class="spec-item"><span class="k">机型</span><span class="v">CL855</span></div>
+          <div class="spec-item"><span class="k">电耗</span><span class="v">40 kWh/h</span></div>
+        </div>
+        <p class="spec-note"><span class="k">适用对象</span>5-7T 装载机，工作场景固定，工作半径 50 米以内，电缆有架空要求。</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 案例四 -->
+  <section class="case case--alt">
+    <div class="wrap">
+      <header class="case-head">
+        <div class="idx">案例四</div>
+        <h3>沃尔沃 VCEC360 · 36T 挖掘机</h3>
+      </header>
+
+      <div class="case-grid">
+        <figure class="media">
+          <img src="assets/img/case-newenergy/case4.jpg" alt="36T 挖掘机新能源改装作业场景">
+        </figure>
+
+        <div class="content">
+          <h4>使用效果</h4>
+          <p class="effect">改造升级后，电耗为 82 kWh/h，不仅环保还大大节省了能耗和维修费用。</p>
+
+          <h4>方案介绍</h4>
+          <ol class="steps">
+            <li><span class="num">01</span><span>该方案为 36T 挖掘机上拖电方案；</span></li>
+            <li><span class="num">02</span><span>拆除车辆原发动机安装新能源永磁同步水冷电机、电控，电机直接与发动机相连，为车辆提供动力，采用新能源五合一控制器驱动主驱电机，为车辆 24V 充电，采用新能源空调冷风一体机和暖风一体机实现空调冷暖风。原车散热系统不变，原车水箱给安装的电机、电控散热，安装 4 个可调速电子风扇对散热器进行散热。</span></li>
+            <li><span class="num">03</span><span>供电系统 380V 市电供给智控电源，智控电源输出 600V 直流电通过全智能自动收线器供给挖掘机，电缆悬空供电，可随车辆移动自动收放线缆，线缆始终处于悬空状态，车上安装授电杆，授电杆上部安装电滑环（支持 360° 旋转）。车辆可 360° 旋转工作，工作半径 70 米。</span></li>
+            <li><span class="num">04</span><span>该全智能收线器定制开发的适用于 70 米工作半径的收线器。</span></li>
+          </ol>
+        </div>
+      </div>
+
+      <div class="spec">
+        <div class="spec-title">技术参数</div>
+        <div class="spec-list">
+          <div class="spec-item"><span class="k">品牌</span><span class="v">沃尔沃</span></div>
+          <div class="spec-item"><span class="k">机种</span><span class="v">挖掘机</span></div>
+          <div class="spec-item"><span class="k">吨级</span><span class="v">36T</span></div>
+          <div class="spec-item"><span class="k">机型</span><span class="v">VCEC360</span></div>
+          <div class="spec-item"><span class="k">电耗</span><span class="v">82 kWh/h</span></div>
+        </div>
+        <p class="spec-note"><span class="k">适用对象</span>20-50T 挖掘机，工作场景固定，电缆有悬空要求。</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 案例五 -->
+  <section class="case">
+    <div class="wrap">
+      <header class="case-head">
+        <div class="idx">案例五</div>
+        <h3>小松 WA470-6 · 7T 装载机</h3>
+      </header>
+
+      <div class="case-grid">
+        <figure class="media">
+          <img src="assets/img/case-newenergy/case5.jpg" alt="7T 装载机新能源改装作业场景">
+        </figure>
+
+        <div class="content">
+          <h4>使用效果</h4>
+          <p class="effect">改造升级后，电耗为 65 kWh/h，不仅环保还大大节省了能耗和维修费用。</p>
+
+          <h4>方案介绍</h4>
+          <ol class="steps">
+            <li><span class="num">01</span><span>该方案为 7T 装载机上电电混动方案；</span></li>
+            <li><span class="num">02</span><span>拆除车辆原发动机安装新能源永磁同步水冷电机、电控，电机直接与变速箱相连，为车辆提供动力，采用新能源五合一控制器驱动主驱电机，为车辆 24V 充电，采用新能源空调冷风一体机和暖风一体机实现空调冷暖风。原车散热系统不变，原车水箱给安装的电机、电控散热，使用原车液压马达风扇对散热器进行散热。</span></li>
+            <li><span class="num">03</span><span>供电系统 380V 市电供给智控电源，智控电源输出 600V 直流电通过授电杆和全智能自动收线器供给装载机，收线器安装在车上，方便多场地工作，减少投资成本，电缆悬空供电，可随车辆移动自动收放线缆，线缆始终处于悬空状态，场地可安装多个授电杆，工作半径 50 米。</span></li>
+            <li><span class="num">04</span><span>车上安装 282kWh 电池，可以脱线利用电池工作 2-3 个小时。</span></li>
+            <li><span class="num">05</span><span>该全智能收线器定制开发的适用于车上安装的收线器。</span></li>
+          </ol>
+        </div>
+      </div>
+
+      <div class="spec">
+        <div class="spec-title">技术参数</div>
+        <div class="spec-list">
+          <div class="spec-item"><span class="k">品牌</span><span class="v">小松</span></div>
+          <div class="spec-item"><span class="k">机种</span><span class="v">装载机</span></div>
+          <div class="spec-item"><span class="k">吨级</span><span class="v">7T</span></div>
+          <div class="spec-item"><span class="k">机型</span><span class="v">WA470-6</span></div>
+          <div class="spec-item"><span class="k">电耗</span><span class="v">65 kWh/h</span></div>
+        </div>
+        <p class="spec-note"><span class="k">适用对象</span>工作场景相对固定，但有切换场地需求，并且现场变压器容量不足，电缆有悬空要求。</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 底部转化 -->
+  <section class="cta">
+    <div class="wrap">
+      <div class="cta-inner">
+        <div>
+          <h2>工程机械新能源改装，一站式改造方案</h2>
+          <p>覆盖挖掘机、装载机等多机型，提供电机电控、智能供电、自动收线等全套改造服务。</p>
+        </div>
+        <button type="button" class="btn">获取改造方案</button>
+      </div>
+    </div>
+  </section>
+
+<div id="site-footer-new"></div>
+<script src="assets/js/site-footer.js"></script>
+
+</body>
+</html>

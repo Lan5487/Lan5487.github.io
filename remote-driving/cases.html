@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>远程驾驶案例 - 天远科技集团</title>
+<meta name="description" content="天远远程驾驶应用案例：港口、危化、矿山三大行业，覆盖甲板作业、清舱、化工厂拆迁、炸药清理、露天煤矿等场景。" />
+<link rel="icon" href="data:," />
+<link rel="stylesheet" href="assets/css/style.css" />
+</head>
+<body>
+<div id="site-header"></div>
+<script>window.SITE_BASE='../';window.SITE_NAV_KEY='case';window.SITE_HEADER_THEME='remote';</script>
+<script src="../assets/js/site-header.js"></script>
+<style>/* site-header.js 运行时会注入 :root{--text:#3f3f3f}，这里用更高优先级恢复本页文字色 */
+html:root{--text:#101319}</style>
+
+<!-- ===== T1 焦点图 ===== -->
+<section class="page-hero">
+  <div class="hero__img"><img src="assets/img/hero-bg.jpg" alt="天远远程驾驶：从驾驶舱到现场设备" fetchpriority="high" /></div>
+  <div class="hero__shade"></div>
+  <div class="hero__fade"></div>
+  <div class="page-hero__in">
+    <span class="pill">CASES</span>
+    <h1 style="margin-top:22px">场景案例</h1>
+  </div>
+</section>
+
+<!-- ===== T2 汇总数据 ===== -->
+<section class="sec sec--navy">
+  <div class="wrap">
+    <div class="stats">
+      <div class="stat rv"><div class="stat__num">500+台</div><div class="stat__label">累计改装设备</div></div>
+      <div class="stat rv"><div class="stat__num">50+机型</div><div class="stat__label">覆盖市场主流品牌机型</div></div>
+      <div class="stat rv"><div class="stat__num">10+行业</div><div class="stat__label">广泛应用于各行各业</div></div>
+      <div class="stat rv"><div class="stat__num">100000+小时</div><div class="stat__label">累计安全作业</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== T3 筛选 + T4 案例网格 ===== -->
+<section class="sec sec--navy" style="padding-top:0">
+  <div class="wrap">
+    <div class="filters" id="tabs">
+      <button class="filter is-on" data-filter="all">
+        <span class="filter__ico">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"><rect x="3" y="3" width="7.5" height="7.5" rx="1.4"/><rect x="13.5" y="3" width="7.5" height="7.5" rx="1.4"/><rect x="3" y="13.5" width="7.5" height="7.5" rx="1.4"/><rect x="13.5" y="13.5" width="7.5" height="7.5" rx="1.4"/></svg>
+        </span>
+        <span class="filter__lb">全部</span>
+      </button>
+      <button class="filter" data-filter="港口">
+        <span class="filter__ico">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 21h19"/><path d="M5.5 21V5.5h9.5"/><path d="M5.5 5.5L12 3.2"/><path d="M15 5.5v3.5"/><path d="M11 9h8.5"/><path d="M15 9v3.2"/><rect x="12.4" y="12.2" width="5.2" height="4" rx=".7"/></svg>
+        </span>
+        <span class="filter__lb">港口</span>
+      </button>
+      <button class="filter" data-filter="危化">
+        <span class="filter__ico">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3.2l9.4 16.8H2.6z"/><path d="M12 9.2v5"/><circle cx="12" cy="17.1" r=".95" fill="currentColor" stroke="none"/></svg>
+        </span>
+        <span class="filter__lb">危化</span>
+      </button>
+      <button class="filter" data-filter="矿山">
+        <span class="filter__ico">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M1.8 20.2l6.9-11.4 3.8 6.2 2.6-4.1 7.1 9.3z"/><path d="M8.7 8.8l1.9 3"/></svg>
+        </span>
+        <span class="filter__lb">矿山</span>
+      </button>
+    </div>
+    <div class="cases" id="grid"></div>
+  </div>
+</section>
+
+<!-- ===== T5 底部 CTA + 表单 ===== -->
+<section class="sec cta" id="contact">
+  <div class="wrap">
+    <div class="cta__grid">
+      <div>
+        <span class="eyebrow">CONTACT</span>
+        <h2>您的需求是我们的追求。<br /><span>联系我们</span></h2>
+        <p class="cta__tip">告诉我们你的作业场景与设备型号，我们会给出对应的远程驾驶改造方案。</p>
+      </div>
+      <form class="form" onsubmit="event.preventDefault();this.querySelector('.btn').textContent='已提交，我们会尽快联系您';">
+        <div class="form__row">
+          <label>公司名称</label>
+          <input type="text" placeholder="请输入公司名称" />
+        </div>
+        <div class="form__row">
+          <label>电话<b>*</b></label>
+          <input type="tel" placeholder="请输入联系电话" required />
+        </div>
+        <div class="form__row">
+          <label>备注</label>
+          <textarea placeholder="作业场景、设备型号等"></textarea>
+        </div>
+        <button class="btn btn--orange" type="submit">提交</button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- ===== P3 案例详情弹窗 ===== -->
+<div class="ov" id="ov">
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="mTitle">
+    <div class="modal__hero">
+      <img id="mImg" src="" alt="" />
+      <button class="modal__close" id="mClose" aria-label="关闭">×</button>
+      <div class="modal__head">
+        <div>
+          <span class="modal__tag" id="mTag">港口</span>
+          <div class="modal__title" id="mTitle">项目名称</div>
+        </div>
+      </div>
+    </div>
+    <div class="modal__body">
+      <div class="mgallery" id="mGallery"></div>
+      <div id="mBlocks">
+        <div class="mblock">
+          <h4>项目背景</h4>
+          <p id="mBg"></p>
+        </div>
+        <div class="mblock">
+          <h4>核心痛点</h4>
+          <ul class="mlist" id="mPain"></ul>
+        </div>
+        <div class="mblock">
+          <h4>解决方案</h4>
+          <ul class="mlist" id="mSol"></ul>
+        </div>
+        <div class="mblock">
+          <h4>核心数据指标</h4>
+          <div class="mdata" id="mData"></div>
+        </div>
+      </div>
+      <div id="mRaw"></div>
+      <div class="mfoot">
+        <a href="index.html#contact" class="btn btn--orange btn--sm">咨询类似方案</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="assets/js/data.js"></script>
+<script src="assets/js/cases.js"></script>
+</body>
+</html>

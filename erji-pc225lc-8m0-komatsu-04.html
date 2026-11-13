@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PC225LC-8M0 小松液压挖掘机（液压泵） - 二手机销售与租赁 - 天远科技集团</title>
+  <style>
+    :root {
+      --header-h: 115px;
+      --primary: #0b308e;
+      --text: #3f3f3f;
+      --phone: #949494;
+      --bg: #ffffff;
+      --max-w: 1920px;
+    }
+
+    * { box-sizing: border-box; }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", "Hiragino Sans GB", sans-serif;
+      background: #f5f5f5;
+      color: var(--text);
+    }
+
+    .page {
+      max-width: var(--max-w);
+      margin: 0 auto;
+      background: var(--bg);
+      overflow: hidden;
+    }
+
+    /* ===== 顶部导航（HTML 公共模块，sticky） ===== */
+    .site-header {
+      position: sticky;
+      top: 0;
+      height: var(--header-h);
+      background: rgba(255, 255, 255, 0.98);
+      z-index: 100;
+    }
+
+    .header-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 100%;
+      padding: 0 80px;
+    }
+
+    .logo a {
+      display: flex;
+      align-items: center;
+      height: var(--header-h);
+    }
+
+    .logo img {
+      display: block;
+      width: 260px;
+      height: auto;
+    }
+
+    .main-nav {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+    }
+
+    .main-nav ul {
+      display: flex;
+      align-items: center;
+      gap: 84px;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    .main-nav li { position: relative; }
+
+    .main-nav a {
+      display: block;
+      font-size: 18px;
+      line-height: var(--header-h);
+      color: var(--text);
+      text-decoration: none;
+      white-space: nowrap;
+      transition: color 0.2s;
+    }
+
+    .main-nav li.active > a { color: var(--primary); }
+
+    .main-nav li.active::after {
+      content: "";
+      position: absolute;
+      bottom: 7px;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: var(--primary);
+      border-radius: 2px;
+    }
+
+    .main-nav li:hover > a { color: var(--primary); }
+
+    .dropdown {
+      display: none;
+      position: absolute;
+      top: calc(var(--header-h) - 8px);
+      left: 50%;
+      transform: translateX(-50%);
+      min-width: 220px;
+      background: #ffffff;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+      border-radius: 4px;
+      padding: 8px 0;
+    }
+
+    .main-nav li:hover .dropdown { display: block; }
+
+    .dropdown a {
+      display: block;
+      padding: 10px 24px;
+      line-height: 1.5;
+      font-size: 15px;
+      color: var(--text);
+    }
+
+    .dropdown a:hover {
+      color: var(--primary);
+      background: #f7f8fa;
+    }
+
+    .phone {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 18px;
+      color: var(--phone);
+      white-space: nowrap;
+    }
+
+    .phone-icon {
+      width: 20px;
+      height: 20px;
+      fill: none;
+      stroke: currentColor;
+      stroke-width: 1.6;
+    }
+
+    /* ===== 面包屑导航 ===== */
+    .breadcrumb {
+      max-width: var(--max-w);
+      margin: 0 auto;
+      padding: 20px 80px 0;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 14px;
+      color: var(--phone);
+      background: var(--bg);
+      flex-wrap: wrap;
+    }
+
+    .breadcrumb a {
+      color: var(--text);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .breadcrumb a:hover { color: var(--primary); }
+
+    .breadcrumb .sep { color: var(--phone); }
+
+    .breadcrumb .current {
+      color: var(--primary);
+      font-weight: 500;
+    }
+
+    /* ===== 详情页各模块 ===== */
+    .section {
+      width: 100%;
+      line-height: 0;
+    }
+
+    .section > img {
+      display: block;
+      width: 100%;
+      height: auto;
+    }
+
+    /* 产品主体区块：承载返回列表切片覆盖层 */
+    .product-section {
+      position: relative;
+      max-width: var(--max-w);
+      margin: 0 auto;
+    }
+
+    .back-link-overlay {
+      position: absolute;
+      top: 23.05%;
+      right: 8.125%;
+      width: 4.896%;
+      z-index: 2;
+      display: block;
+      border-radius: 4px;
+      transition: opacity 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .back-link-overlay img {
+      display: block;
+      width: 100%;
+      height: auto;
+    }
+
+    .back-link-overlay:hover {
+      opacity: 0.8;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    }
+
+    .back-link-overlay:focus-visible {
+      outline: 3px solid var(--primary);
+      outline-offset: 2px;
+    }
+
+    /* 产品缩略图卡片（覆盖在产品图左侧） */
+    .thumbnail-cards {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+    }
+
+    .thumbnail-card {
+      position: absolute;
+      left: 8.333%;
+      width: 8.073%;
+      pointer-events: auto;
+      display: block;
+      border-radius: 4px;
+      overflow: hidden;
+      background: #fff;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .thumbnail-card img {
+      display: block;
+      width: 100%;
+      height: auto;
+    }
+
+    .thumbnail-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+    }
+
+    .thumbnail-card:focus-visible {
+      outline: 3px solid var(--primary);
+      outline-offset: 2px;
+    }
+
+    /* ===== 基础响应式 ===== */
+    @media (max-width: 1200px) {
+      .header-inner { padding: 0 24px; }
+      .main-nav ul { gap: 32px; }
+      .breadcrumb { padding-left: 24px; padding-right: 24px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+
+    <!-- 顶部导航（HTML 公共模块，sticky 吸顶） -->
+    <div id="site-header"></div>
+<script src="assets/js/site-header.js"></script>
+
+    <!-- 面包屑导航 -->
+    <nav class="breadcrumb" aria-label="面包屑">
+      <a href="index.html">首页</a>
+      <span class="sep">›</span>
+      <a href="scene-1.html">产品与服务</a>
+      <span class="sep">›</span>
+      <a href="product-secondhand.html">二手机销售与租赁</a>
+      <span class="sep">›</span>
+      <span class="current">PC225LC-8M0 小松液压挖掘机（液压泵）</span>
+    </nav>
+
+    <!-- 详情页主体：banner / 产品区（含返回列表覆盖层）/ footer -->
+
+    <!-- 模块 1：蓝色科技 Banner -->
+    <section class="section" id="banner">
+      <img src="assets/img/erji/pc225lc-8m0/pc225lc-banner-04.png" alt="PRODUCTS &amp; SERVICES - 二手机销售与租赁业务 - 小松 PC225LC-8M0 液压挖掘机详情页">
+    </section>
+
+    <!-- 模块 2：产品主体（含 5 张缩略图、主图、基本信息、服务保障、在线询价；返回列表覆盖层位于右上角） -->
+    <section class="section product-section" id="product" aria-label="小松 PC225LC-8M0 液压挖掘机产品信息">
+      <!-- 返回列表覆盖层：透明切片覆盖在产品图右上角 -->
+      <a href="product-secondhand.html" class="back-link-overlay" aria-label="返回二手机列表" tabindex="0">
+        <img src="assets/img/erji/pc225lc-8m0/pc225lc-back.png" alt="返回列表">
+      </a>
+
+      <!-- 产品缩略图卡片：每张用单个 <a> 完整包裹，覆盖在产品图左侧原缩略图位置 -->
+      <div class="thumbnail-cards" aria-label="产品多角度缩略图">
+        <a href="erji-pc225lc-8m0-komatsu.html" class="thumbnail-card" style="top:17.19%;" aria-label="查看小松 PC225LC-8M0 侧视图" tabindex="0">
+          <img src="assets/img/erji/pc225lc-8m0/thumbs-04/thumb-01.png" alt="小松 PC225LC-8M0 液压挖掘机 - 侧视图">
+        </a>
+        <a href="erji-pc225lc-8m0-komatsu-02.html" class="thumbnail-card" style="top:28.11%;" aria-label="查看小松 PC225LC-8M0 后视图" tabindex="0">
+          <img src="assets/img/erji/pc225lc-8m0/thumbs-04/thumb-02.png" alt="小松 PC225LC-8M0 液压挖掘机 - 后视图">
+        </a>
+        <a href="erji-pc225lc-8m0-komatsu-03.html" class="thumbnail-card" style="top:39.03%;" aria-label="查看小松 PC225LC-8M0 左侧" tabindex="0">
+          <img src="assets/img/erji/pc225lc-8m0/thumbs-04/thumb-03.png" alt="小松 PC225LC-8M0 液压挖掘机 - 左侧">
+        </a>
+        <a href="erji-pc225lc-8m0-komatsu-04.html" class="thumbnail-card" style="top:49.95%;" aria-label="当前：小松 PC225LC-8M0 液压泵" tabindex="0">
+          <img src="assets/img/erji/pc225lc-8m0/thumbs-04/thumb-04.png" alt="小松 PC225LC-8M0 液压挖掘机 - 液压泵">
+        </a>
+        <a href="erji-pc225lc-8m0-komatsu-05.html" class="thumbnail-card" style="top:60.87%;" aria-label="查看小松 PC225LC-8M0 驾驶室" tabindex="0">
+          <img src="assets/img/erji/pc225lc-8m0/thumbs-04/thumb-05.png" alt="小松 PC225LC-8M0 液压挖掘机 - 驾驶室">
+        </a>
+      </div>
+
+      <img src="assets/img/erji/pc225lc-8m0/pc225lc-product-04.png" alt="小松 PC225LC-8M0 液压挖掘机 - 液压泵 / 生产年份 2019.02 / 工作小时数 2335.4 H / 吨位 20 吨 / 斗容 3.6 m³ / 在线询价">
+    </section>
+
+
+    <div id="site-footer-new"></div>
+    <script src="assets/js/site-footer.js"></script>
+  </div>
+</body>
+</html>

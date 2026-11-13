@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>产品与服务 - 二手机销售与租赁业务 - 天远科技集团</title>
+  <style>
+    :root {
+      --header-h: 115px;
+      --primary: #0b308e;
+      --text: #3f3f3f;
+      --phone: #949494;
+      --bg: #ffffff;
+      --max-w: 1920px;
+    }
+
+    * { box-sizing: border-box; }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", "Hiragino Sans GB", sans-serif;
+      background: #f5f5f5;
+      color: var(--text);
+    }
+
+    .page {
+      max-width: var(--max-w);
+      margin: 0 auto;
+      background: var(--bg);
+      overflow: hidden;
+    }
+
+    /* ===== 顶部导航（HTML 公共模块，sticky） ===== */
+    .site-header {
+      position: sticky;
+      top: 0;
+      height: var(--header-h);
+      background: rgba(255, 255, 255, 0.98);
+      z-index: 100;
+    }
+
+    .header-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 100%;
+      padding: 0 80px;
+    }
+
+    .logo a {
+      display: flex;
+      align-items: center;
+      height: var(--header-h);
+    }
+
+    .logo img {
+      display: block;
+      width: 260px;
+      height: auto;
+    }
+
+    .main-nav {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+    }
+
+    .main-nav ul {
+      display: flex;
+      align-items: center;
+      gap: 84px;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    .main-nav li { position: relative; }
+
+    .main-nav a {
+      display: block;
+      font-size: 18px;
+      line-height: var(--header-h);
+      color: var(--text);
+      text-decoration: none;
+      white-space: nowrap;
+      transition: color 0.2s;
+    }
+
+    .main-nav li.active > a { color: var(--primary); }
+
+    .main-nav li.active::after {
+      content: "";
+      position: absolute;
+      bottom: 7px;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: var(--primary);
+      border-radius: 2px;
+    }
+
+    .main-nav li:hover > a { color: var(--primary); }
+
+    .dropdown {
+      display: none;
+      position: absolute;
+      top: calc(var(--header-h) - 8px);
+      left: 50%;
+      transform: translateX(-50%);
+      min-width: 220px;
+      background: #ffffff;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+      border-radius: 4px;
+      padding: 8px 0;
+    }
+
+    .main-nav li:hover .dropdown { display: block; }
+
+    .dropdown a {
+      display: block;
+      padding: 10px 24px;
+      line-height: 1.5;
+      font-size: 15px;
+      color: var(--text);
+    }
+
+    .dropdown a:hover {
+      color: var(--primary);
+      background: #f7f8fa;
+    }
+
+    .phone {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 18px;
+      color: var(--phone);
+      white-space: nowrap;
+    }
+
+    .phone-icon {
+      width: 20px;
+      height: 20px;
+      fill: none;
+      stroke: currentColor;
+      stroke-width: 1.6;
+    }
+
+    /* ===== 区块图通用样式 ===== */
+    .section {
+      width: 100%;
+      line-height: 0;
+    }
+
+    .section img {
+      display: block;
+      width: 100%;
+      height: auto;
+    }
+
+    /* ===== 设备展示：底图 + 4 张独立卡片层（严格按原型 1920 栅格） ===== */
+    .devices-grid {
+      position: relative;
+      width: 100%;
+      line-height: 0;
+    }
+
+    .devices-grid > .devices-bg {
+      display: block;
+      width: 100%;
+      height: auto;
+    }
+
+    /* 卡片层容器铺满「卡片区」底图；内含 4 个按百分比绝对定位的卡片槽 */
+    .erji-cards {
+      position: absolute;
+      inset: 0;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .card-slot {
+      position: absolute;
+      top: calc(100 * 100% / 700);      /* (2976-2876)/700 */
+      width: calc(382 * 100% / 1920);
+      height: calc(500 * 100% / 700);
+    }
+
+    .card-slot:nth-child(1) { left: calc(171  * 100% / 1920); }
+    .card-slot:nth-child(2) { left: calc(577  * 100% / 1920); }
+    .card-slot:nth-child(3) { left: calc(983  * 100% / 1920); }
+    .card-slot:nth-child(4) { left: calc(1389 * 100% / 1920); }
+
+    .erji-card {
+      display: block;
+      width: 100%;
+      height: 100%;
+      position: relative;
+      overflow: hidden;
+      text-decoration: none;
+      color: inherit;
+      line-height: 0;
+      outline: none;
+      transition: transform .28s cubic-bezier(.4, 0, .2, 1), box-shadow .28s ease;
+    }
+
+    /* 原跳转链接已按需求隐藏保留（不删除）：务必显式 display:none，
+       否则会被上面的 .erji-card{display:block} 覆盖掉 [hidden] 的默认样式 */
+    .erji-card[hidden] { display: none; }
+
+    .erji-card img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform .38s cubic-bezier(.4, 0, .2, 1);
+    }
+
+    .erji-card::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border: 2px solid transparent;
+      border-radius: 4px;
+      transition: border-color .28s ease;
+      pointer-events: none;
+    }
+
+    .erji-card:hover,
+    .erji-card:focus-visible {
+      transform: translateY(-8px);
+      box-shadow: 0 18px 40px rgba(11, 48, 142, 0.18);
+    }
+
+    .erji-card:hover img,
+    .erji-card:focus-visible img {
+      transform: scale(1.06);
+    }
+
+    .erji-card:hover::after,
+    .erji-card:focus-visible::after {
+      border-color: var(--primary);
+    }
+
+    .erji-card:focus-visible {
+      outline: 3px solid var(--primary);
+      outline-offset: 2px;
+    }
+
+    /* ===== 基础响应式（导航；区块图与卡片按比例自适应，无需额外断点） ===== */
+    @media (max-width: 1200px) {
+      .header-inner { padding: 0 24px; }
+      .main-nav ul { gap: 32px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+
+    <!-- 顶部导航（HTML 公共模块，sticky 吸顶） -->
+    <div id="site-header"></div>
+<script src="assets/js/site-header.js"></script>
+
+    <!-- 主体：严格按原型图自上而下顺序（顶部设计稿导航已裁掉，改用全站公共导航） -->
+
+    <!-- 模块 1：PRODUCTS & SERVICES — 二手机销售与租赁业务 Banner -->
+    <section class="section" id="banner">
+      <img src="assets/img/erji-v2/01-hero.png" alt="PRODUCTS &amp; SERVICES - 二手机销售与租赁业务">
+    </section>
+
+    <!-- 模块 2：业务介绍（2017年成立 / 4人小松认证评估师 / 200+台库存设备 + 大配图） -->
+    <section class="section" id="intro">
+      <img src="assets/img/erji-v2/02-intro.png" alt="业务介绍 - 河北天远机械设备租赁有限公司 2017年成立 / 4人小松认证评估师 / 200+台库存设备">
+    </section>
+
+    <!-- 模块 3：销售条件（中心“商务” + 租赁条件 / 质保服务 / 设备评估 / 寄售 / 置换）
+         沿用原 id 以免影响任何指向本页的锚点 -->
+    <section class="section" id="flow">
+      <img src="assets/img/erji-v2/03-sales.png" alt="销售条件 - 租赁条件 / 质保服务 / 设备评估 / 寄售 / 置换">
+    </section>
+
+    <!-- 模块 4：设备展示 深色分隔 Banner -->
+    <section class="section" id="devices-banner">
+      <img src="assets/img/erji-v2/04-band1.png" alt="二手机设备展示">
+    </section>
+
+    <!-- 模块 5：设备展示 —— 4 张设备卡（交互效果保留；点击跳转指定外链；原链接隐藏保留不删除） -->
+    <section class="devices-grid" id="devices-grid">
+      <img class="devices-bg" src="assets/img/erji-v2/05-devices.png" alt="" aria-hidden="true">
+      <ul class="erji-cards" role="list">
+        <li class="card-slot">
+          <!-- 原跳转链接（已隐藏保留，未删除）：如需恢复，去掉 hidden 并删除下方外链卡片即可 -->
+          <a class="erji-card" href="erji-01-pc225lc-11m0.html" hidden aria-hidden="true" tabindex="-1">
+            <img src="assets/img/erji/cards/01-used-pc225lc-11m0-left.png" alt="PC225LC-11M0 小松液压挖掘机">
+          </a>
+          <a class="erji-card" href="https://80333cff931b479c9bfa6d088013c238.app.workbuddy.host/#/u/DZBH0090" target="_blank" rel="noopener noreferrer" aria-label="PC200-11M1 液压挖掘机 - 查看详情">
+            <img src="assets/img/erji-v2/cards/01-pc200-11m1.png" alt="PC200-11M1 液压挖掘机">
+          </a>
+        </li>
+        <li class="card-slot">
+          <!-- 原跳转链接（已隐藏保留，未删除） -->
+          <a class="erji-card" href="#" data-wip="true" hidden aria-hidden="true" tabindex="-1">
+            <img src="assets/img/erji/cards/02-used-pc225lc-11m0-right.png" alt="PC225LC-11M0 液压挖掘机">
+          </a>
+          <a class="erji-card" href="https://80333cff931b479c9bfa6d088013c238.app.workbuddy.host/#/u/DZBH0090" target="_blank" rel="noopener noreferrer" aria-label="PC225LC-11M1 液压挖掘机 - 查看详情">
+            <img src="assets/img/erji-v2/cards/02-pc225lc-11m1.png" alt="PC225LC-11M1 液压挖掘机">
+          </a>
+        </li>
+        <li class="card-slot">
+          <!-- 原跳转链接（已隐藏保留，未删除） -->
+          <a class="erji-card" href="#" data-wip="true" hidden aria-hidden="true" tabindex="-1">
+            <img src="assets/img/erji/cards/03-used-pc225lc-11m0-front-left.png" alt="PC225LC-11M0 液压挖掘机">
+          </a>
+          <a class="erji-card" href="https://80333cff931b479c9bfa6d088013c238.app.workbuddy.host/#/u/DZBH0090" target="_blank" rel="noopener noreferrer" aria-label="PC330-11M0 液压挖掘机 - 查看详情">
+            <img src="assets/img/erji-v2/cards/03-pc330-11m0.png" alt="PC330-11M0 液压挖掘机">
+          </a>
+        </li>
+        <li class="card-slot">
+          <!-- 原跳转链接（已隐藏保留，未删除） -->
+          <a class="erji-card" href="#" data-wip="true" hidden aria-hidden="true" tabindex="-1">
+            <img src="assets/img/erji/cards/04-used-pc330-11m0-rear-right.png" alt="PC330-11M0 液压挖掘机">
+          </a>
+          <a class="erji-card" href="https://80333cff931b479c9bfa6d088013c238.app.workbuddy.host/#/u/DZBH0090" target="_blank" rel="noopener noreferrer" aria-label="PC375LC-11M0 液压挖掘机 - 查看详情">
+            <img src="assets/img/erji-v2/cards/04-pc375lc-11m0.png" alt="PC375LC-11M0 液压挖掘机">
+          </a>
+        </li>
+      </ul>
+    </section>
+
+    <!-- 模块 6：租赁应用场景 深色分隔 Banner -->
+    <section class="section" id="scenes-banner">
+      <img src="assets/img/erji-v2/06-band2.png" alt="租赁应用场景">
+    </section>
+
+    <!-- 模块 7：租赁应用场景 实景拼贴（土方 / 石方 / 矿山 / 市政与城建 / 水利与农田 / 林业与物料装卸 / 抢险救援） -->
+    <section class="section" id="scenes">
+      <img src="assets/img/erji-v2/07-scenes.png" alt="租赁应用场景 - 土方、石方、矿山、市政与城建、水利与农田、林业与物料装卸、抢险救援等各种工况实景">
+    </section>
+
+    <!-- 模块 8：全站底部导航栏（按「底部导航栏.png」制作，第三项新增） -->
+    <div id="site-footer-new"></div>
+    <script src="assets/js/site-footer.js"></script>
+
+  </div>
+</body>
+</html>

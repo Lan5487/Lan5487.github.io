@@ -1,0 +1,1080 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>产品与服务-新能源改装/部件产品 - 天远科技集团</title>
+  <style>
+    :root {
+      --header-h: 115px;
+      --primary: #0b308e;
+      --text: #3f3f3f;
+      --phone: #949494;
+      --bg: #ffffff;
+      --max-w: 1920px;
+    }
+
+    * { box-sizing: border-box; }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", "Hiragino Sans GB", sans-serif;
+      background: #f5f5f5;
+      color: var(--text);
+    }
+
+    .page {
+      max-width: var(--max-w);
+      margin: 0 auto;
+      background: var(--bg);
+      overflow: hidden;
+    }
+
+    /* ===== 顶部导航（与首页一致，完全可点击） ===== */
+    .site-header {
+      position: sticky;
+      top: 0;
+      height: var(--header-h);
+      background: rgba(255, 255, 255, 0.98);
+      z-index: 100;
+    }
+
+    .header-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 100%;
+      padding: 0 80px;
+    }
+
+    .logo a {
+      display: flex;
+      align-items: center;
+      height: var(--header-h);
+    }
+
+    .logo img {
+      display: block;
+      width: 260px;
+      height: auto;
+    }
+
+    .main-nav {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+    }
+
+    .main-nav ul {
+      display: flex;
+      align-items: center;
+      gap: 84px;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    .main-nav li { position: relative; }
+
+    .main-nav a {
+      display: block;
+      font-size: 18px;
+      line-height: var(--header-h);
+      color: var(--text);
+      text-decoration: none;
+      white-space: nowrap;
+      transition: color 0.2s;
+    }
+
+    .main-nav li.active > a,
+    .main-nav li.current > a { color: var(--primary); }
+
+    .main-nav li.active::after,
+    .main-nav li.current::after {
+      content: "";
+      position: absolute;
+      bottom: 7px;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: var(--primary);
+      border-radius: 2px;
+    }
+
+    .main-nav li:hover > a { color: var(--primary); }
+
+    .dropdown {
+      display: none;
+      position: absolute;
+      top: calc(var(--header-h) - 8px);
+      left: 50%;
+      transform: translateX(-50%);
+      min-width: 220px;
+      background: #ffffff;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+      border-radius: 4px;
+      padding: 8px 0;
+    }
+
+    .main-nav li:hover .dropdown { display: block; }
+
+    .dropdown a {
+      display: block;
+      padding: 10px 24px;
+      line-height: 1.5;
+      font-size: 15px;
+      color: var(--text);
+      border-bottom: 1px solid transparent;
+    }
+
+    .dropdown a:hover {
+      color: var(--primary);
+      background: #f7f8fa;
+    }
+
+    .phone {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 18px;
+      color: var(--phone);
+      white-space: nowrap;
+    }
+
+    .phone-icon {
+      width: 20px;
+      height: 20px;
+      fill: none;
+      stroke: currentColor;
+      stroke-width: 1.6;
+    }
+
+
+    /* ===== 蓝色科技 Banner ===== */
+    .site-banner { width: 100%; line-height: 0; }
+    .site-banner img { display: block; width: 100%; height: auto; }
+
+    /* ===== 主体区（侧栏 + 内容）：单张静态图，1920px 内容列 1:1 ===== */
+    .main-stage { display: block; width: 100%; line-height: 0; background: #ffffff; }
+    .main-stage .stage-img { display: block; width: 100%; height: auto; }
+
+    /* ===================================================================
+       主体区：底图 + 左侧 HTML 交互菜单 + 右侧预览层（叠加式，底图 0 改动）
+       坐标全部按设计稿 1920x1740 基准换算成百分比；--u = 1 个设计像素
+       =================================================================== */
+    .stage {
+      --u: 1px;                       /* 由 JS 按 stage.clientWidth / 1920 写入 */
+      position: relative;
+      display: flex;
+      align-items: flex-start;
+      gap: calc(var(--u) * 60);       /* 左侧导航与右侧内容之间的间隔 */
+      width: 100%;
+      padding-top: calc(var(--u) * 200);     /* 与首屏宽图的间隔 */
+      padding-bottom: calc(var(--u) * 520);  /* 与底部导航的间隔 */
+      line-height: 0;
+      background: #ffffff;
+    }
+
+    /* ---------- 右侧预览层（内容列 x473..1761，覆盖底图内容，做淡入淡出） ---------- */
+    .stage-view {
+      flex: 0 0 70.885417%;   /* 1361 / 1920 内容列（容纳完整部件产品图） */
+      position: relative;
+      background: #ffffff;
+      line-height: 0;
+      z-index: 1;
+    }
+    .sv-layer {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      opacity: 0;
+      z-index: 1;
+      background: #ffffff;
+      pointer-events: none;   /* 仅当前帧可交互（见下方 .is-current） */
+    }
+    .sv-layer > img { display: block; max-width: 100%; height: auto; }  /* 宽度由内联 style 按原图像素设定，保证 1:1 */
+    /* 淡入防闪烁：旧帧保持 opacity:1 垫底，新帧 0 -> 1 */
+    .sv-layer.is-outgoing { opacity: 1; z-index: 2; transition: none; }
+    .sv-layer.is-current  { opacity: 1; z-index: 3; transition: opacity 0.32s ease; pointer-events: auto; }
+
+    /* ---------- 产品卡片层（部件产品：从预览图抠出的独立卡片，悬停上浮）
+          动效数值沿用 product-iot.html 的 .iot-card：200ms ease / 上浮 4px / 阴影加深。
+          静止态与设计稿逐像素一致（底图对应区域已抹白），悬停时才抬起。 ---------- */
+    .sv-card {
+      position: absolute;
+      display: block;
+      background: #ffffff;
+      text-decoration: none;
+      color: inherit;
+      cursor: pointer;
+      outline: none;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    .sv-card:hover,
+    .sv-card:focus-visible {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+    }
+    .sv-card:focus-visible { outline: 3px solid #0b308e; outline-offset: 2px; }
+    .sv-card > img { display: block; width: 100%; height: 100%; }
+
+    .sv-layer--empty {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .sv-empty-note {
+      font-size: calc(var(--u) * 20);
+      line-height: 1.6;
+      letter-spacing: calc(var(--u) * 2);
+      color: #b9bec7;
+      text-align: center;
+    }
+
+    /* ---------- 左侧导航 ---------- */
+    .stage-nav {
+      flex: 0 0 24.635417%;   /* 473 / 1920 导航列 */
+      /* 注意：百分比 padding 按【包含块宽度】解析，不能用 160/473；
+         这里用 --u（= 容器宽/1920）换算 160 设计像素 */
+      padding-left: calc(var(--u) * 160);
+      background: #ffffff;
+      line-height: normal;
+      z-index: 2;
+    }
+    .sn-list { list-style: none; margin: 0; padding: 0; }
+    .sn-item { margin: 0 0 calc(var(--u) * 8) 0; }
+    .sn-item:last-child { margin-bottom: 0; }
+    .sn-item.is-open { margin-bottom: calc(var(--u) * 2); }
+
+    .sn-ctrl {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+      height: calc(var(--u) * 58);
+      margin: 0 0 calc(var(--u) * 8) 0;
+      padding: 0 calc(var(--u) * 30) 0 calc(var(--u) * 33);
+      border: 0;
+      border-radius: calc(var(--u) * 8);
+      background: #f4f4f4;
+      color: #333333;
+      font-family: inherit;
+      font-size: calc(var(--u) * 18);
+      line-height: 1;
+      text-align: left;
+      cursor: pointer;
+      -webkit-appearance: none;
+      appearance: none;
+      transition: background-color 0.18s ease, color 0.18s ease;
+    }
+    .sn-item.is-open > .sn-ctrl { margin-bottom: 0; }
+    .sn-ctrl:hover { background: #e9e9e9; }
+    .sn-ctrl.is-active,
+    .sn-ctrl.is-active:hover { background: #0b308e; color: #ffffff; }
+    .sn-ctrl:focus-visible { outline: 2px solid #0b308e; outline-offset: 2px; }
+
+    .sn-caret {
+      flex: 0 0 auto;
+      width: calc(var(--u) * 10);
+      height: calc(var(--u) * 10);
+      color: #999999;
+      transition: transform 0.22s ease, color 0.18s ease;
+    }
+    .sn-ctrl.is-active .sn-caret { color: #ffffff; }
+    .sn-caret > svg { display: block; width: 100%; height: 100%; }
+    .sn-caret--collapsed { transform: rotate(-90deg); }
+
+    .sn-sub { list-style: none; margin: 0; padding: 0; display: none; }
+    .sn-item.is-open > .sn-sub { display: block; }
+
+    .sn-sub-btn {
+      display: flex;                 /* 需为 flex：否则 <i> 箭头为 inline，宽高失效、SVG 撑满整行 */
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+      height: calc(var(--u) * 50);
+      padding: 0 calc(var(--u) * 30) 0 calc(var(--u) * 47);
+      border: 0;
+      background: transparent;
+      color: #888888;
+      font-family: inherit;
+      font-size: calc(var(--u) * 17);
+      line-height: 1;
+      text-align: left;
+      cursor: pointer;
+      -webkit-appearance: none;
+      appearance: none;
+      transition: color 0.18s ease;
+    }
+    .sn-sub-btn:hover { color: #444444; }
+    .sn-sub-btn.is-active,
+    .sn-sub-btn.is-active:hover { color: #0b308e; }
+    .sn-sub-btn:focus-visible { outline: 2px solid #0b308e; outline-offset: -2px; }
+    .sn-sub-btn[disabled] { cursor: default; }
+
+    /* 三级：分类下的产品条目（常驻可见，点击跳转详情页） */
+    .sn-sub2 { list-style: none; margin: 0; padding: 0; }
+
+    .sn-prod-link {
+      display: block;
+      height: calc(var(--u) * 44);
+      padding: 0 calc(var(--u) * 12) 0 calc(var(--u) * 64);
+      border: 0;
+      color: #888888;
+      font-family: inherit;
+      font-size: calc(var(--u) * 16);
+      line-height: calc(var(--u) * 44);
+      text-align: left;
+      text-decoration: none;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      transition: color 0.18s ease;
+    }
+    .sn-prod-link:hover { color: #0b308e; text-decoration: underline; }
+    .sn-prod-link:focus-visible { outline: 2px solid #0b308e; outline-offset: -2px; }
+
+    /* 二级菜单项容器（用于三级 accordion 展开） */
+    .sn-sub-item { margin-bottom: calc(var(--u) * 4); }
+    .sn-sub-item:last-child { margin-bottom: 0; }
+
+    /* 三级·预览切换项（accordion 展开，缩进更深，点击切换右侧预览） */
+    .sn-sub3 { list-style: none; margin: 0; padding: 0; display: none; }
+    .sn-sub-item.is-open > .sn-sub3 { display: block; }
+    .sn-sub3-btn {
+      display: block;
+      width: 100%;
+      height: calc(var(--u) * 42);
+      padding: 0 calc(var(--u) * 12) 0 calc(var(--u) * 64);
+      border: 0;
+      background: transparent;
+      color: #888888;
+      font-family: inherit;
+      font-size: calc(var(--u) * 16);
+      line-height: 1;
+      text-align: left;
+      cursor: pointer;
+      -webkit-appearance: none;
+      appearance: none;
+      transition: color 0.18s ease;
+    }
+    .sn-sub3-btn:hover { color: #444444; }
+    .sn-sub3-btn.is-active,
+    .sn-sub3-btn.is-active:hover { color: #0b308e; }
+    .sn-sub3-btn:focus-visible { outline: 2px solid #0b308e; outline-offset: -2px; }
+    /* 三级项作为父级（低压收线器）时需 flex，否则 <i> 箭头为 inline、宽高失效 */
+    .sn-sub3-btn--parent {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    /* 四级：低压收线器下的收线器条目（缩进再深一级） */
+    .sn-sub3-item { margin-bottom: calc(var(--u) * 2); }
+    .sn-sub3-item:last-child { margin-bottom: 0; }
+    .sn-sub4 { list-style: none; margin: 0; padding: 0; display: none; }
+    .sn-sub3-item.is-open > .sn-sub4 { display: block; }
+    .sn-sub4-btn {
+      display: block;
+      width: 100%;
+      height: calc(var(--u) * 40);
+      padding: 0 calc(var(--u) * 12) 0 calc(var(--u) * 82);
+      border: 0;
+      background: transparent;
+      color: #888888;
+      font-family: inherit;
+      font-size: calc(var(--u) * 15);
+      line-height: 1;
+      text-align: left;
+      cursor: pointer;
+      -webkit-appearance: none;
+      appearance: none;
+      transition: color 0.18s ease;
+    }
+    .sn-sub4-btn:hover { color: #444444; }
+    .sn-sub4-btn.is-active,
+    .sn-sub4-btn.is-active:hover { color: #0b308e; }
+    .sn-sub4-btn:focus-visible { outline: 2px solid #0b308e; outline-offset: -2px; }
+
+    /* ===== 主体：左侧菜单 + 右侧产品 ===== */
+    .main {
+      display: flex;
+      flex-direction: row;
+      align-items: flex-start;
+      width: 100%;
+      max-width: 1600px;
+      margin: 0 auto;
+    }
+
+    /* ===== 侧边栏（HTML+CSS 可点击菜单） ===== */
+    .sidebar {
+      flex: 0 0 320px;
+      width: 320px;
+      padding: 20px 24px;
+      background: #ffffff;
+      overflow: hidden;
+    }
+    .sidebar-list li { margin-bottom: 14px; }
+    .sidebar-list a {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 64px;
+      padding: 0 28px;
+      background: #f4f5f7;
+      color: #333;
+      font-size: 18px;
+      border-radius: 4px;
+      transition: background 0.15s ease;
+      cursor: pointer;
+    }
+    .sidebar-list a:hover { background: #e6e8ec; }
+    .sidebar-list a.active { background: #0b308e; color: #ffffff; }
+
+    /* ===== 右侧产品板块 ===== */
+    .content { flex: 1 1 auto; min-width: 0; line-height: 0; }
+    .content .mod { width: 100%; }
+    .content .mod img { display: block; width: 100%; height: auto; }
+
+    /* ===== 场景1 内容区（单张静态图片，1280px 内容列 1:1） ===== */
+    .mod-scene { width: 100%; line-height: 0; background: #ffffff; }
+    .mod-scene .scene-img { display: block; width: 100%; height: auto; }
+
+    /* 智控电源下方留白 500px */
+    .power-controller-spacer { height: 500px; background: #ffffff; }
+
+
+    /* ===== 基础响应式 ===== */
+    @media (max-width: 1200px) {
+      .header-inner { padding: 0 24px; }
+      .main-nav ul { gap: 32px; }
+      .main { flex-direction: column; }
+      .sidebar { flex: 0 0 auto; width: 100%; padding: 16px; }
+    }
+
+    /* ===== 底部导航（按官网第四批设计还原：LOGO+联系信息+3列导航+二维码+版权） ===== */
+    .site-footer {
+      background: #ffffff;
+      color: #333333;
+      padding: 48px 80px 24px;
+      margin-top: 40px;
+      border-top: 1px solid #e0e0e0;
+    }
+    .footer-inner {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      max-width: 1600px;
+      margin: 0 auto;
+      gap: 40px;
+    }
+    .footer-brand { flex: 0 0 320px; }
+    .footer-logo {
+      display: block;
+      width: 200px;
+      height: auto;
+      margin-bottom: 20px;
+    }
+    .footer-contact {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+    .footer-contact li {
+      font-size: 14px;
+      line-height: 2;
+      color: #666666;
+    }
+    .footer-nav {
+      flex: 1;
+      display: flex;
+      justify-content: space-between;
+      gap: 40px;
+    }
+    .footer-col { flex: 1; min-width: 0; }
+    .footer-col h4 {
+      font-size: 16px;
+      font-weight: 600;
+      color: #333333;
+      margin: 0 0 16px 0;
+    }
+    .footer-col a {
+      display: block;
+      color: #666666;
+      text-decoration: none;
+      font-size: 14px;
+      line-height: 2;
+    }
+    .footer-col a:hover { color: #0b308e; }
+    .footer-qr { flex: 0 0 108px; }
+    .footer-qr img {
+      display: block;
+      width: 108px;
+      height: 108px;
+    }
+    .footer-bottom {
+      text-align: center;
+      padding-top: 20px;
+      margin-top: 30px;
+      border-top: 1px solid #e0e0e0;
+      font-size: 12px;
+      color: #999999;
+      max-width: 1600px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .footer-bottom span { margin: 0 12px; }
+    @media (max-width: 1200px) {
+      .footer-inner { flex-wrap: wrap; padding: 0 24px; }
+      .footer-brand { flex: 0 0 100%; margin-bottom: 24px; }
+      .footer-nav { flex: 0 0 100%; flex-wrap: wrap; }
+      .footer-col { flex: 0 0 33.333%; margin-bottom: 20px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+
+    <!-- 顶部导航（可点击，与首页一致；“产品与服务”为当前页） -->
+    <div id="site-header"></div>
+<script src="assets/js/site-header.js"></script>
+    <!-- 蓝色科技 Banner -->
+    <section class="site-banner">
+      <img src="assets/img/product-newenergy/hero.png" width="1920" height="530" alt="产品与服务 - 新能源改装/部件产品">
+    </section>
+
+
+    <!-- 主体区：底图 + 左侧 HTML 交互菜单 + 右侧预览层
+         （叠加式：底图 scene-1-main.png 未改动；坐标按设计稿 1920x1740 基准） -->
+    <main class="stage" id="sceneStage">
+
+      <!-- 左侧垂直导航（HTML 交互菜单；结构见页尾 MENU 配置） -->
+      <nav class="stage-nav" id="sceneNav" aria-label="新能源改装场景导航"></nav>
+
+      <!-- 右侧主预览区（随选中项平滑切换，过渡无空白） -->
+      <div class="stage-view" id="sceneView" aria-live="polite"></div>
+    </main>
+
+    <!-- 底部导航（按官网第四批设计还原） -->
+    <div id="site-footer-new"></div>
+    <script src="assets/js/site-footer.js"></script>
+
+  </div>
+
+<script>
+/* ============================================================================
+   新能源改装场景页 —— 左侧垂直导航交互
+   ----------------------------------------------------------------------------
+   素材约定：预览图 = 场景设计稿「内容列」裁切，固定坐标 crop(473,640,1761,2380)
+             = 1288 x 1740，存 assets/img/product-newenergy/scenes/views/<viewKey>.png
+   图到位后只需在 VIEW_IMG 里补一行即可（其余逻辑无需改动）。
+   ========================================================================== */
+(function () {
+  'use strict';
+
+  /* ======================= 配置区（只改这里） ======================= */
+
+  /* 视图 key -> 预览图路径。
+     本次按要求「删除本页原有素材图片引用（仅删引用，磁盘文件保留）」，右侧视图图全部移除，
+     所有 key 均不配置图片，预览区统一显示文字占位（内容待补充）。 */
+  var VIEW_IMG = {
+    'battery-nanny-s1': { src: 'assets/img/product-newenergy/v3/battery-nanny-s1.png', w: 1288, h: 1348, btns: [{left:34.47204968944099,top:52.225519287833826,width:31.055900621118013,height:4.154302670623146}] },
+    'battery-nanny-s2': { src: 'assets/img/product-newenergy/v3/battery-nanny-s2.png', w: 1288, h: 1298, btns: [{left:34.47204968944099,top:54.23728813559322,width:31.055900621118013,height:4.314329738058552}] },
+    'battery-nanny-s3': { src: 'assets/img/product-newenergy/v3/battery-nanny-s3.png', w: 1288, h: 1148, btns: [{left:34.47204968944099,top:61.32404181184669,width:31.055900621118013,height:4.878048780487805}] },
+    'battery-nanny-s4': { src: 'assets/img/product-newenergy/v3/battery-nanny-s4.png', w: 1288, h: 1148, btns: [{left:34.47204968944099,top:61.32404181184669,width:31.055900621118013,height:4.878048780487805}] },
+    'battery-nanny-s5': { src: 'assets/img/product-newenergy/v3/battery-nanny-s5.png', w: 1288, h: 1298, btns: [{left:34.47204968944099,top:54.23728813559322,width:31.055900621118013,height:4.314329738058552}] },
+    'battery-vehicle': { src: 'assets/img/product-newenergy/v3/battery-vehicle.png', w: 1288, h: 1259, btns: [{left:34.47204968944099,top:56.39396346306592,width:31.055900621118013,height:4.447974583002383}] },
+    'g-combo': { src: 'assets/img/product-newenergy/v3/g-combo.png', w: 1288, h: 1198, btns: [{left:34.47204968944099,top:58.764607679465776,width:31.055900621118013,height:4.674457429048414}] },
+    'parts-nanny': { src: 'assets/img/product-newenergy/v3/parts-nanny.png', w: 1361, h: 561, btns: [{left:9.919177075679647,top:77.00534759358288,width:19.177075679647317,height:9.982174688057041},{left:43.130051432770024,top:77.00534759358288,width:19.177075679647317,height:9.982174688057041}] },
+    'parts-nanny-mains': { src: 'assets/img/product-newenergy/v3/parts-nanny-mains.png', w: 1361, h: 1169, btns: [] },
+    'parts-nanny-pure': { src: 'assets/img/product-newenergy/v3/parts-nanny-pure.png', w: 1361, h: 1100, btns: [] },
+    'parts-power': { src: 'assets/img/product-newenergy/v3/parts-power.png', w: 1539, h: 1466, btns: [{left:53.801169590643276,top:38.608458390177354,width:16.95906432748538,height:3.819918144611187}] },
+    'parts-powertrain': { src: 'assets/img/product-newenergy/v3/parts-powertrain.png', w: 1361, h: 1109, btns: [{left:9.919177075679647,top:38.95401262398557,width:19.177075679647317,height:5.049594229035167},{left:43.130051432770024,top:38.95401262398557,width:19.177075679647317,height:5.049594229035167},{left:76.34092578986039,top:38.95401262398557,width:19.177075679647317,height:5.049594229035167},{left:9.919177075679647,top:88.36789900811542,width:19.177075679647317,height:5.049594229035167},{left:43.130051432770024,top:88.36789900811542,width:19.177075679647317,height:5.049594229035167}] },
+    'parts-powertrain-105': { src: 'assets/img/product-newenergy/v3/parts-powertrain-105.png', w: 1361, h: 1771, btns: [{left:47.759000734753855,top:27.950310559006212,width:19.177075679647317,height:3.1620553359683794}] },
+    'parts-powertrain-150': { src: 'assets/img/product-newenergy/v3/parts-powertrain-150.png', w: 1361, h: 1771, btns: [{left:47.759000734753855,top:27.950310559006212,width:19.177075679647317,height:3.1620553359683794}] },
+    'parts-powertrain-250': { src: 'assets/img/product-newenergy/v3/parts-powertrain-250.png', w: 1361, h: 1771, btns: [{left:47.759000734753855,top:27.950310559006212,width:19.177075679647317,height:3.1620553359683794}] },
+    'parts-powertrain-310': { src: 'assets/img/product-newenergy/v3/parts-powertrain-310.png', w: 1361, h: 1771, btns: [{left:47.759000734753855,top:27.950310559006212,width:19.177075679647317,height:3.1620553359683794}] },
+    'parts-powertrain-620': { src: 'assets/img/product-newenergy/v3/parts-powertrain-620.png', w: 1361, h: 1771, btns: [{left:47.759000734753855,top:27.950310559006212,width:19.177075679647317,height:3.1620553359683794}] },
+    'parts-retractor': { src: 'assets/img/product-newenergy/v3/parts-retractor.png', w: 1361, h: 1179, btns: [{left:9.919177075679647,top:36.6412213740458,width:19.177075679647317,height:4.749787955894826},{left:43.130051432770024,top:36.6412213740458,width:19.177075679647317,height:4.749787955894826},{left:76.34092578986039,top:36.6412213740458,width:19.177075679647317,height:4.749787955894826},{left:9.919177075679647,top:89.05852417302799,width:19.177075679647317,height:4.749787955894826}] },
+    'parts-retractor-hv': { src: 'assets/img/product-newenergy/v3/parts-retractor-hv.png', w: 1361, h: 1323, btns: [{left:47.759000734753855,top:37.26379440665155,width:19.177075679647317,height:4.232804232804233}] },
+    'parts-retractor-lv-down': { src: 'assets/img/product-newenergy/v3/parts-retractor-lv-down.png', w: 1361, h: 1323, btns: [{left:47.759000734753855,top:37.26379440665155,width:19.177075679647317,height:4.232804232804233}] },
+    'parts-retractor-lv-up-double': { src: 'assets/img/product-newenergy/v3/parts-retractor-lv-up-double.png', w: 1361, h: 1429, btns: [{left:47.759000734753855,top:38.418474457662704,width:19.177075679647317,height:3.918824352694192}] },
+    'parts-retractor-lv-up-single': { src: 'assets/img/product-newenergy/v3/parts-retractor-lv-up-single.png', w: 1361, h: 1416, btns: [{left:47.759000734753855,top:37.85310734463277,width:19.177075679647317,height:3.9548022598870056}] },
+    'trailer-long-s1': { src: 'assets/img/product-newenergy/v3/trailer-long-s1.png', w: 1288, h: 1395, btns: [{left:34.47204968944099,top:50.25089605734767,width:31.055900621118013,height:4.014336917562724}] },
+    'trailer-long-s2': { src: 'assets/img/product-newenergy/v3/trailer-long-s2.png', w: 1288, h: 1348, btns: [{left:34.47204968944099,top:52.225519287833826,width:31.055900621118013,height:4.154302670623146}] },
+    'trailer-long-s3': { src: 'assets/img/product-newenergy/v3/trailer-long-s3.png', w: 1288, h: 1398, btns: [{left:34.47204968944099,top:50.35765379113018,width:31.055900621118013,height:4.005722460658083}] },
+    'trailer-long-s4': { src: 'assets/img/product-newenergy/v3/trailer-long-s4.png', w: 1288, h: 1398, btns: [{left:34.47204968944099,top:50.35765379113018,width:31.055900621118013,height:4.005722460658083}] },
+    'trailer-short-s1': { src: 'assets/img/product-newenergy/v3/trailer-short-s1.png', w: 1288, h: 1198, btns: [{left:34.47204968944099,top:58.764607679465776,width:31.055900621118013,height:4.674457429048414}] },
+    'trailer-short-s2': { src: 'assets/img/product-newenergy/v3/trailer-short-s2.png', w: 1288, h: 1248, btns: [{left:34.47204968944099,top:56.41025641025641,width:31.055900621118013,height:4.487179487179487}] }
+  };
+
+  /* 预览图 alt 文案（可选） */
+  var VIEW_ALT = {};
+
+  /* 侧栏三级结构：
+     MENU    = 一级（电池版 / 拖线版 / 部件产品）
+     g.sub   = 二级（车载电池 / 电保姆供电 / 短距 / 长距 / 电保姆 / 动力总成 / 智能收线器 / 智控电源）
+     s.sub   = 三级·预览切换项（场景1-10、纯电电保姆、市电电保姆）—— 点击切换右侧预览
+     s.items = 三级·产品条目（常驻可见，点击跳详情页；动力总成/智能收线器/智控电源保持既有）
+     本次仅重做左侧导航的层级结构与菜单文字，右侧图片暂不对应（缺图 key 自动降级占位层）。 */
+  /* 左侧垂直导航 —— 按需求严格还原（菜单文字照抄，不增删改；层级与顺序固定）
+     分组标题 1~4：电池方案 / 拖电方案 / 拖电+电池方案 / 部件产品
+     规则：
+       - 分组标题 1、2、4（有子项、未标注右侧待提供）：点击 = 手风琴展开/收起（同一时刻仅一组展开；
+         点击已展开组则收起），不触发右侧变化。
+       - 分组标题 3（拖电+电池方案，无子项，标注待提供）：点击 = 选中(文字变选中色) + 右侧占位。
+       - 其余条目（均标注「右侧素材待提供」）：点击 = 选中(文字变选中色) + 右侧占位切换。
+     right:true 表示该条目点击后右侧占位会变化（即需求中标注「右侧素材待提供」的项）。
+     入站深链 key（?sel=）保留映射：parts-powertrain / parts-retractor / parts-power。 */
+  var MENU = [
+    { key: 'g-battery', label: '电池方案', sub: [
+        { key: 'battery-vehicle', label: '车载电池' },
+        { key: 'battery-nanny', label: '外置电池供电(电保姆)', sub: [
+            { key: 'battery-nanny-s1', label: '场景1' },
+            { key: 'battery-nanny-s2', label: '场景2' },
+            { key: 'battery-nanny-s3', label: '场景3' },
+            { key: 'battery-nanny-s4', label: '场景4' },
+            { key: 'battery-nanny-s5', label: '场景5' }
+          ] }
+      ] },
+    { key: 'g-trailer', label: '拖电方案', sub: [
+        { key: 'trailer-short', label: '短距供电', sub: [
+            { key: 'trailer-short-s1', label: '场景1' },
+            { key: 'trailer-short-s2', label: '场景2' }
+          ] },
+        { key: 'trailer-long', label: '长距供电', sub: [
+            { key: 'trailer-long-s1', label: '场景1' },
+            { key: 'trailer-long-s2', label: '场景2' },
+            { key: 'trailer-long-s3', label: '场景3' },
+            { key: 'trailer-long-s4', label: '场景4' }
+          ] }
+      ] },
+    { key: 'g-combo', label: '拖电+电池方案', noChildren: true },
+    { key: 'g-parts', label: '部件产品', sub: [
+        { key: 'parts-nanny', label: '电保姆', sub: [
+            { key: 'parts-nanny-pure',  label: '纯电电保姆' },
+            { key: 'parts-nanny-mains', label: '市电电保姆' }
+          ] },
+        { key: 'parts-powertrain', label: '动力总成', sub: [
+            { key: 'parts-powertrain-105', label: '105kW 动力总成' },
+            { key: 'parts-powertrain-150', label: '150kW 动力总成' },
+            { key: 'parts-powertrain-250', label: '250kW 动力总成' },
+            { key: 'parts-powertrain-310', label: '310kW 动力总成' },
+            { key: 'parts-powertrain-620', label: '620kW 动力总成' }
+          ] },
+        { key: 'parts-retractor', label: '智能收线器', sub: [
+            { key: 'parts-retractor-hv',          label: '下送电高压收线器' },
+            { key: 'parts-retractor-lv-up-single', label: '上送电低压单轮收线器' },
+            { key: 'parts-retractor-lv-up-double', label: '上送电低压双轮收线器' },
+            { key: 'parts-retractor-lv-down',      label: '下送电低压收线器' }
+          ] },
+        { key: 'parts-power', label: '智控电源' }
+      ] }
+  ];
+
+  /* ---------------------------------------------------------------
+     产品卡片层（仅「部件产品」的三个分类有卡片）
+     卡片已从预览图 scenes/views/<viewKey>.png 里抠成独立图片，底图对应区域抹白：
+     静止态与设计稿逐像素一致，悬停才上浮；整卡可点，跳对应部件详情页。
+     坐标 = 设计稿 1288 x 1740 预览坐标系下的像素，运行时换算为百分比。
+     新增/调整卡片：改这里即可，无需动其它逻辑。
+     --------------------------------------------------------------- */
+  var VIEW_BOX = { w: 1288, h: 1740 };
+  var CARD_BOX = { w: 382, h: 500, cols: [1, 453, 905], rows: [152, 700] };
+  var CARD_DIR = 'assets/img/product-newenergy/cards/';
+
+  /* 产品卡片层：本次按要求删除原有素材图片引用，卡片图不再加载（磁盘文件保留）。
+     部件产品各分类改为右侧文字占位，不再生成可点卡片。 */
+  var CARD_ITEMS = {};
+
+  /* 内容列设计宽度（= .stage-view 的 70.885417% × 1920）。
+     视图原图宽于该值时，等比缩小后完整显示，避免被裁切。 */
+  var VIEW_MAX_W = 1361;
+  function fitScale(v) { return (v && v.w > VIEW_MAX_W) ? (VIEW_MAX_W / v.w) : 1; }
+
+  var DEFAULT_KEY = 'g-battery';   /* 默认分组（仅作预览层兜底 key） */
+  var FADE_MS = 340;             /* 预览切换淡入时长（略大于 CSS .32s） */
+
+  /* ============================== 逻辑 ============================== */
+
+  var stage    = document.getElementById('sceneStage');
+  var navRoot  = document.getElementById('sceneNav');
+  var viewRoot = document.getElementById('sceneView');
+  if (!stage || !navRoot || !viewRoot) { return; }
+
+  var CARET = '<svg viewBox="0 0 10 10" aria-hidden="true">'
+            + '<path d="M0.6 2.6 L5 7 L9.4 2.6" fill="none" stroke="currentColor" stroke-width="1.6"/></svg>';
+
+  var ctrlEls = {}, groupItemEls = {}, subEls = {}, subLiEls = {}, subCaretEls = {}, sub3Els = {}, layers = {};
+  var sub3LiEls = {}, sub3CaretEls = {}, sub4Els = {};
+  var currentLayer = null;
+  var openGroup = null, openSub = null, openSubSub = null, openSub4 = null;
+  var selKey = null;    /* 左侧选中项（驱动文字变蓝） */
+  var viewKey = null;   /* 右侧占位对应的项；仅标注「右侧素材待提供」的条目点击后才变化 */
+
+  function groupOf(key) {
+    for (var i = 0; i < MENU.length; i++) { if (MENU[i].key === key) { return MENU[i]; } }
+    return null;
+  }
+
+  /* ---- 1) 建侧栏 DOM ---- */
+  var ul = document.createElement('ul');
+  ul.className = 'sn-list';
+
+  MENU.forEach(function (g) {
+    var li = document.createElement('li');
+    li.className = 'sn-item';
+
+    var btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'sn-ctrl';
+    btn.setAttribute('aria-expanded', 'false');
+
+    var label = document.createElement('span');
+    label.textContent = g.label;
+    btn.appendChild(label);
+
+    var subs = g.sub || [];
+    if (subs.length || g.hasSub) {
+      var caret = document.createElement('i');
+      caret.className = 'sn-caret sn-caret--collapsed';
+      caret.innerHTML = CARET;
+      btn.appendChild(caret);
+    }
+
+    btn.addEventListener('click', function () {
+      if (g.noChildren) { activate(g.key, null, null, null, !!VIEW_IMG[g.key]); }  /* 无子项分组：有图则切换右侧 */
+      else { selectGroupToggle(g.key); }                              /* 分组1/2/4：手风琴展开/收起 */
+    });
+    li.appendChild(btn);
+
+    var subUl = document.createElement('ul');
+    subUl.className = 'sn-sub';
+    subs.forEach(function (s) {
+      var sli = document.createElement('li');
+      sli.className = 'sn-sub-item';
+      var sb = document.createElement('button');
+      sb.type = 'button';
+      sb.className = 'sn-sub-btn';
+      sb.textContent = s.label;
+      var sHasSub   = !!(s.sub && s.sub.length);
+      var sHasItems = !!(s.items && s.items.length);
+      if (sHasSub) {
+        var sc = document.createElement('i');
+        sc.className = 'sn-caret sn-caret--collapsed';
+        sc.innerHTML = CARET;
+        sb.appendChild(sc);
+        subCaretEls[s.key] = sc;
+      }
+      sb.addEventListener('click', function () { activate(g.key, s.key, null, null, !!VIEW_IMG[s.key]); });
+      sli.appendChild(sb);
+      subEls[s.key] = sb;
+      subLiEls[s.key] = sli;
+
+      /* 三级·预览切换项（accordion 展开；有子项的三级项自身再展开四级） */
+      if (sHasSub) {
+        var s3 = document.createElement('ul');
+        s3.className = 'sn-sub3';
+        s.sub.forEach(function (x) {
+          var xli = document.createElement('li');
+          xli.className = 'sn-sub3-item';
+          var xb = document.createElement('button');
+          xb.type = 'button';
+          xb.className = 'sn-sub3-btn';
+          xb.textContent = x.label;
+          var xHasSub = !!(x.sub && x.sub.length);
+          if (xHasSub) {
+            xb.classList.add('sn-sub3-btn--parent');
+            var xc = document.createElement('i');
+            xc.className = 'sn-caret sn-caret--collapsed';
+            xc.innerHTML = CARET;
+            xb.appendChild(xc);
+            sub3CaretEls[x.key] = xc;
+          }
+          xb.addEventListener('click', function (ev) {
+            ev.stopPropagation();
+            activate(g.key, s.key, x.key, null, !!VIEW_IMG[x.key]);
+          });
+          xli.appendChild(xb);
+          s3.appendChild(xli);
+          sub3Els[x.key] = xb;
+          sub3LiEls[x.key] = xli;
+
+          /* 四级：低压收线器 → 上送电/下送电 */
+          if (xHasSub) {
+            var s4 = document.createElement('ul');
+            s4.className = 'sn-sub4';
+            x.sub.forEach(function (y) {
+              var yli = document.createElement('li');
+              var yb = document.createElement('button');
+              yb.type = 'button';
+              yb.className = 'sn-sub4-btn';
+              yb.textContent = y.label;
+              yb.addEventListener('click', function (ev) {
+                ev.stopPropagation();
+                activate(g.key, s.key, x.key, y.key, true);
+              });
+              yli.appendChild(yb);
+              s4.appendChild(yli);
+              sub4Els[y.key] = yb;
+            });
+            xli.appendChild(s4);
+          }
+        });
+        sli.appendChild(s3);
+      }
+
+      /* 三级·产品条目（常驻可见，点击跳转到对应详情页；既有分类保持不变） */
+      if (sHasItems) {
+        var pUl = document.createElement('ul');
+        pUl.className = 'sn-sub2';
+        s.items.forEach(function (p) {
+          var pli = document.createElement('li');
+          var pa = document.createElement('a');
+          pa.className = 'sn-prod-link';
+          pa.href = p.href;
+          pa.textContent = p.label;
+          pli.appendChild(pa);
+          pUl.appendChild(pli);
+        });
+        sli.appendChild(pUl);
+      }
+
+      subUl.appendChild(sli);
+    });
+    li.appendChild(subUl);
+
+    ctrlEls[g.key] = btn;
+    groupItemEls[g.key] = li;
+    ul.appendChild(li);
+  });
+  navRoot.appendChild(ul);
+
+  /* ---- 2) 建预览层（每个视图一层，缺图为占位层） ---- */
+  /* 注意：不做小数截断 —— 截断会得到 0.99998px 这类亚像素坐标，触发图片重采样，
+     静止态就无法与设计稿逐像素一致了 */
+  function pct(v, total) { return (v / total * 100) + '%'; }
+
+  /* 产品卡片：按设计稿坐标绝对定位（百分比，随预览框自适应），整卡可点 */
+  function makeCards(layer, viewKey) {
+    var items = CARD_ITEMS[viewKey];
+    if (!items) { return; }
+    items.forEach(function (it) {
+      var a = document.createElement('a');
+      a.className = 'sv-card';
+      a.href = it.href;
+      a.setAttribute('aria-label', it.label + ' - 查看产品详情');
+      a.style.left   = pct(CARD_BOX.cols[it.col], VIEW_BOX.w);
+      a.style.top    = pct(CARD_BOX.rows[it.row], VIEW_BOX.h);
+      a.style.width  = pct(CARD_BOX.w, VIEW_BOX.w);
+      a.style.height = pct(CARD_BOX.h, VIEW_BOX.h);
+
+      var ci = document.createElement('img');
+      ci.src = CARD_DIR + it.card;
+      ci.alt = it.label + ' - 产品图 + 在线询价 + 图片|参数';
+      a.appendChild(ci);
+
+      layer.appendChild(a);
+    });
+  }
+
+  function makeLayer(viewKey, groupLabel, itemLabel) {
+    var d = document.createElement('div');
+    d.className = 'sv-layer';
+    d.setAttribute('data-view', viewKey);
+    var view = VIEW_IMG[viewKey];
+    var fullLabel = groupLabel + (itemLabel ? ' \u00b7 ' + itemLabel : '');
+    if (view && view.src) {
+      var img = document.createElement('img');
+      img.src = view.src;
+      img.alt = VIEW_ALT[viewKey] || fullLabel;
+      var sc = fitScale(view);
+      img.style.width = 'calc(var(--u) * ' + (view.w * sc) + ')';   /* 超出内容列宽时等比缩小，完整显示 */
+      d.appendChild(img);
+      /* 「在线询价」热区：叠在烘焙于图中的蓝色按钮上，点击弹出留资表单 */
+      (view.btns || []).forEach(function (b) {
+        var btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'js-inquiry';
+        btn.setAttribute('data-model', viewKey);
+        btn.setAttribute('data-title', fullLabel);
+        btn.style.left   = b.left + '%';
+        btn.style.top    = b.top + '%';
+        btn.style.width  = b.width + '%';
+        btn.style.height = b.height + '%';
+        btn.setAttribute('aria-label', fullLabel + ' 在线询价');
+        btn.title = '在线询价';
+        d.appendChild(btn);
+      });
+      makeCards(d, viewKey);
+    } else {
+      d.classList.add('sv-layer--empty');
+      var note = document.createElement('span');
+      note.className = 'sv-empty-note';
+      note.textContent = fullLabel + ' \u00b7 内容待补充';
+      d.appendChild(note);
+    }
+    viewRoot.appendChild(d);
+    layers[viewKey] = d;
+  }
+
+  MENU.forEach(function (g) {
+    makeLayer(g.key, g.label, null);
+    (g.sub || []).forEach(function (s) {
+      makeLayer(s.key, g.label, s.label);
+      (s.sub || []).forEach(function (x) {
+        makeLayer(x.key, g.label, s.label + ' · ' + x.label);
+        (x.sub || []).forEach(function (y) {
+          makeLayer(y.key, g.label, s.label + ' · ' + x.label + ' · ' + y.label);
+        });
+      });
+    });
+  });
+
+  /* ---- 3) 预览切换（旧帧垫底 + 新帧淡入 => 无闪烁 / 无空白） ---- */
+  function showView(key) {
+    var target = layers[key] || layers[DEFAULT_KEY];
+    if (!target || target === currentLayer) { return; }
+    /* 预览框按当前视图宽高比自适应高度（容器内各层绝对定位，切换时高度平滑） */
+    var vv = VIEW_IMG[key] || VIEW_IMG[DEFAULT_KEY];
+    if (vv && vv.h) { viewRoot.style.height = 'calc(var(--u) * ' + (vv.h * fitScale(vv)) + ')'; }
+    var old = currentLayer;
+
+    if (!old) {                       /* 首帧：直接显示，不做淡入 */
+      target.style.transition = 'none';
+      target.classList.add('is-current');
+      void target.offsetWidth;
+      target.style.transition = '';
+      currentLayer = target;
+      return;
+    }
+
+    target.classList.add('is-current');
+    old.classList.remove('is-current');
+    old.classList.add('is-outgoing');
+    window.setTimeout(function () { old.classList.remove('is-outgoing'); }, FADE_MS);
+    currentLayer = target;
+  }
+
+  /* ---- 4) 选中逻辑 ----
+     规则（按需求）：
+       - 分组标题 1/2/4（有子项、未标注右侧待提供）：点击 = 手风琴展开/收起（同一时刻仅一组展开；
+         点击已展开组则收起），不触发右侧变化。
+       - 分组标题 3（拖电+电池方案，无子项、标注待提供）：点击 = 选中(文字变选中色) + 右侧占位。
+       - 其余条目（均标注待提供）：点击 = 选中(文字变选中色) + 右侧占位切换。
+     默认：展开第一组(电池方案)，选中其首个条目(车载电池)。 */
+  function subOf(groupKey, subKey) {
+    var g = groupOf(groupKey);
+    if (!g) { return null; }
+    var s = g.sub || [];
+    for (var i = 0; i < s.length; i++) { if (s[i].key === subKey) { return s[i]; } }
+    return null;
+  }
+
+  /* 手风琴：仅分组标题触发，同一时刻最多一组展开；点击已展开组则收起 */
+  function selectGroupToggle(key) {
+    openGroup = (openGroup === key) ? null : key;
+    openSub = null; openSubSub = null; openSub4 = null;
+    render();
+  }
+
+  /* 子树中是否存在被选中项（用于父级保持高亮） */
+  function hasSel(node) {
+    if (!node || !node.sub) { return false; }
+    for (var i = 0; i < node.sub.length; i++) {
+      var c = node.sub[i];
+      if (c.key === selKey || hasSel(c)) { return true; }
+    }
+    return false;
+  }
+
+  /* 点击菜单项：groupKey 必填，subKey / sub3Key / sub4Key 逐级可选。
+     driveRight=true（叶子、标注「右侧素材待提供」）时才切换右侧占位；
+     父级条目（未标注）仅变色 + 展开子级，右侧保持不变。 */
+  function activate(groupKey, subKey, sub3Key, sub4Key, driveRight) {
+    openGroup  = groupKey;
+    openSub    = subKey  || null;
+    openSubSub = sub3Key || null;
+    openSub4   = sub4Key || null;
+    selKey     = sub4Key || sub3Key || subKey || groupKey;
+    if (driveRight) { viewKey = selKey; }
+    render();
+  }
+
+  function render() {
+    MENU.forEach(function (g) {
+      var gOpen = (g.key === openGroup);
+      groupItemEls[g.key].classList.toggle('is-open', gOpen);
+      ctrlEls[g.key].classList.toggle('is-active', gOpen);
+      ctrlEls[g.key].setAttribute('aria-expanded', gOpen ? 'true' : 'false');
+      var gCaret = ctrlEls[g.key].querySelector('.sn-caret');
+      if (gCaret) { gCaret.classList.toggle('sn-caret--collapsed', !(gOpen && g.sub && g.sub.length)); }
+
+      (g.sub || []).forEach(function (s) {
+        var sOpen = (s.key === openSub);
+        if (subLiEls[s.key]) { subLiEls[s.key].classList.toggle('is-open', sOpen); }
+        var sActive = (s.key === selKey) || hasSel(s);
+        if (subEls[s.key]) { subEls[s.key].classList.toggle('is-active', !!sActive); }
+        if (subCaretEls[s.key]) { subCaretEls[s.key].classList.toggle('sn-caret--collapsed', !(sOpen && s.sub && s.sub.length)); }
+
+        (s.sub || []).forEach(function (x) {
+          var xOpen = (x.key === openSubSub);
+          if (sub3LiEls[x.key]) { sub3LiEls[x.key].classList.toggle('is-open', xOpen); }
+          if (sub3Els[x.key]) { sub3Els[x.key].classList.toggle('is-active', (x.key === selKey) || hasSel(x)); }
+          if (sub3CaretEls[x.key]) { sub3CaretEls[x.key].classList.toggle('sn-caret--collapsed', !(xOpen && x.sub && x.sub.length)); }
+          (x.sub || []).forEach(function (y) {
+            if (sub4Els[y.key]) { sub4Els[y.key].classList.toggle('is-active', y.key === selKey); }
+          });
+        });
+      });
+    });
+    showView(viewKey);
+  }
+
+  /* ---- 5) --u = 1 个设计像素（按 1920 基准），随容器宽度自适应 ---- */
+  function syncUnit() {
+    var w = stage.clientWidth || 1920;
+    stage.style.setProperty('--u', (w / 1920) + 'px');
+  }
+  syncUnit();
+  window.addEventListener('resize', syncUnit);
+  window.addEventListener('orientationchange', syncUnit);
+
+  /* ---- 6) 初始化 ----
+       默认：展开第一组(电池方案)，选中其首个条目(车载电池)。
+       URL 带 ?sel=<子项key> 时改为定位到该子项（详情页返回时保持上下文）；
+       保留的入站深链 key：parts-powertrain / parts-retractor / parts-power。 */
+  var selMatch = /[?&]sel=([^&#]*)/.exec(window.location.search);
+  var selQ     = selMatch ? decodeURIComponent(selMatch[1].replace(/\+/g, ' ')) : '';
+  var selHit   = null;
+  if (selQ) {
+    MENU.forEach(function (g) {
+      if (g.key === selQ) { selHit = { g: g.key }; }
+      (g.sub || []).forEach(function (s) {
+        if (s.key === selQ) { selHit = { g: g.key, s: s.key }; }
+        (s.sub || []).forEach(function (x) {
+          if (x.key === selQ) { selHit = { g: g.key, s: s.key, x: x.key }; }
+          (x.sub || []).forEach(function (y) {
+            if (y.key === selQ) { selHit = { g: g.key, s: s.key, x: x.key, y: y.key }; }
+          });
+        });
+      });
+    });
+  }
+  if (selHit) {
+    activate(selHit.g, selHit.s || null, selHit.x || null, selHit.y || null, true);
+  } else {
+    /* 默认：展开第一组（电池方案），选中其首个条目（车载电池） */
+    openGroup = 'g-battery';
+    openSub = null; openSubSub = null; openSub4 = null;
+    selKey = 'battery-vehicle';
+    viewKey = 'battery-vehicle';
+    render();
+  }
+})();
+</script>
+<script src="assets/js/inquiry-modal.js"></script>
+</body>
+</html>

@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>天远智慧矿山解决方案 - 天远科技集团</title>
+<meta name="description" content="面向露天矿山企业，融合视频+CAN+地磅三源数据，实现采装运全流程数字化、智能化管理。">
+<link rel="stylesheet" href="assets/css/styles.css">
+</head>
+<body>
+<div id="site-header"></div>
+<script>window.SITE_BASE='../';window.SITE_NAV_KEY='solution';window.SITE_HEADER_THEME='dark';</script>
+<script src="../assets/js/site-header.js"></script>
+<div class="site">
+
+<!-- ============ 模块 1 首屏主张 ============ -->
+<header class="hero" id="hero">
+  <div class="hero__bg" aria-hidden="true"></div>
+  <div class="hero__veil" aria-hidden="true"></div>
+  <div class="hero__grid" aria-hidden="true"></div>
+
+  <div class="hero__inner">
+    <div class="hero__content">
+      <p class="hero__tag"><span class="hero__dash">——</span>数字化赋能 · 构建安全、高效、绿色的未来矿山</p>
+      <h1 class="hero__title"><span class="hero__brand">天远</span>智慧矿山解决方案</h1>
+      <p class="hero__lead">
+        以AI赋能，让矿山全局透明、产能跃升、降本增效、设备无忧，构建安全·高效·绿色的未来矿山。
+      </p>
+      <div class="hero__actions">
+        <button class="btn btn--primary" data-open-modal>获取方案</button>
+        <a class="btn btn--ghost" href="#module2">了解痛点与方案</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="hero__scroll" aria-hidden="true"><span></span></div>
+</header>
+
+<!-- ============ 矿山实景视频（自动循环播放） ============ -->
+<section class="section section--video" id="moduleVideo">
+  <div class="wrap">
+    <figure class="mvideo" data-video-wrap>
+      <video class="mvideo__el" id="mineVideo" src="assets/video/mine-promo-720p.mp4"
+             poster="assets/video/mine-promo-poster.jpg" width="1280" height="544"
+             controls controlsList="nodownload noplaybackrate" loop playsinline preload="metadata"
+             aria-label="天远智慧矿山解决方案宣传片"></video>
+    </figure>
+  </div>
+</section>
+
+<!-- ============ 模块 2 行业痛点 ============ -->
+<section class="section section--deep" id="module2">
+  <div class="wrap">
+    <p class="eyebrow" data-reveal>行业痛点</p>
+    <p class="lead-lg" data-reveal>
+      露天矿山的日常，长期依赖人工估算与经验调度——产量靠记、调度靠喊、安全靠盯。数据说不清，管理就没有抓手。智慧矿山管理系统要解决的，正是这五个具体问题。
+    </p>
+
+    <ul class="pain" data-reveal>
+      <li class="pain__item">
+        <span class="pain__icon" aria-hidden="true">
+          <svg viewBox="0 0 40 40" fill="none">
+            <rect x="9" y="6" width="22" height="29" rx="3" stroke="currentColor" stroke-width="1.8"/>
+            <path d="M15 6v3.5a1.5 1.5 0 0 0 1.5 1.5h7A1.5 1.5 0 0 0 25 9.5V6" stroke="currentColor" stroke-width="1.8"/>
+            <path d="M15 28.5v-4M20 28.5v-8M25 28.5v-11" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/>
+            <path d="M13.5 31h13" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-dasharray="2 3"/>
+            <path d="M23 12l3-3 3 3" stroke="#FF7A00" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" opacity=".9"/>
+          </svg>
+        </span>
+        <div class="pain__body">
+          <h3>产量统计滞后</h3>
+          <p>生产数据靠人工估算，产量统计滞后、误差大，结算纠纷频发。</p>
+        </div>
+      </li>
+
+      <li class="pain__item">
+        <span class="pain__icon" aria-hidden="true">
+          <svg viewBox="0 0 40 40" fill="none">
+            <path d="M6 24h13v-6.5a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
+            <path d="M19 24h5v-4l-2.2-2.5H19" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
+            <circle cx="11" cy="27" r="2.6" stroke="currentColor" stroke-width="1.8"/>
+            <circle cx="22" cy="27" r="2.6" stroke="currentColor" stroke-width="1.8"/>
+            <path d="M27 17.5h5.5M29.5 21.5H35M27 25.5h4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" opacity=".55"/>
+            <circle cx="33" cy="17.5" r="1.4" fill="#FF7A00" opacity=".95"/>
+          </svg>
+        </span>
+        <div class="pain__body">
+          <h3>调度凭经验</h3>
+          <p>设备调度凭经验，装车等待时间长，产能释放不充分。</p>
+        </div>
+      </li>
+
+      <li class="pain__item">
+        <span class="pain__icon" aria-hidden="true">
+          <svg viewBox="0 0 40 40" fill="none">
+            <path d="M20 6.5l2.1 3.4 4-.8 1 3.9 3.9 1-.8 4 3.3 2.1-3.3 2.1.8 4-3.9 1-1 3.9-4-.8-2.1 3.4-2.1-3.4-4 .8-1-3.9-3.9-1 .8-4L7.5 20l3.3-2.1-.8-4 3.9-1 1-3.9 4 .8z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/>
+            <path d="M20 15.5v5.5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            <circle cx="20" cy="24.6" r="1.2" fill="#FF7A00"/>
+          </svg>
+        </span>
+        <div class="pain__body">
+          <h3>设备状态不透明</h3>
+          <p>设备健康状态不透明，故障停机被动应对，维修成本高。</p>
+        </div>
+      </li>
+
+      <li class="pain__item">
+        <span class="pain__icon" aria-hidden="true">
+          <svg viewBox="0 0 40 40" fill="none">
+            <path d="M7 27a13 13 0 0 1 26 0" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-dasharray="3.5 3.5"/>
+            <path d="M13 27a7 7 0 0 1 14 0" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" opacity=".55"/>
+            <circle cx="20" cy="19.5" r="2.2" stroke="currentColor" stroke-width="1.8"/>
+            <path d="M15.5 30.5c.6-2.6 2.4-4 4.5-4s3.9 1.4 4.5 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+            <path d="M31.5 30l3.4 6h-6.8z" stroke="#FF7A00" stroke-width="1.7" stroke-linejoin="round"/>
+            <path d="M33.2 33.2v1.6" stroke="#FF7A00" stroke-width="1.5" stroke-linecap="round"/>
+            <circle cx="33.2" cy="36.2" r=".8" fill="#FF7A00"/>
+          </svg>
+        </span>
+        <div class="pain__body">
+          <h3>安全风险靠人盯</h3>
+          <p>安全风险靠人盯，疲劳驾驶、盲区闯入等事故隐患难以及时识别。</p>
+        </div>
+      </li>
+
+      <li class="pain__item pain__item--wide">
+        <span class="pain__icon" aria-hidden="true">
+          <svg viewBox="0 0 40 40" fill="none">
+            <rect x="5" y="6.5" width="12" height="10" rx="2" stroke="currentColor" stroke-width="1.8"/>
+            <rect x="23" y="23.5" width="12" height="10" rx="2" stroke="currentColor" stroke-width="1.8"/>
+            <path d="M5 25.5h8a2 2 0 0 0 2-2v-1" stroke="currentColor" stroke-width="1.5" stroke-dasharray="3 3" opacity=".55"/>
+            <path d="M35 14.5h-8a2 2 0 0 0-2 2v1" stroke="currentColor" stroke-width="1.5" stroke-dasharray="3 3" opacity=".55"/>
+            <path d="M17 11.5h4.5" stroke="currentColor" stroke-width="1.6" stroke-dasharray="2.5 2.5" opacity=".8"/>
+            <path d="M35 11.5h-4" stroke="currentColor" stroke-width="1.6" stroke-dasharray="2.5 2.5" opacity=".8"/>
+            <circle cx="23.5" cy="11.5" r="1.3" fill="#FF7A00"/>
+            <circle cx="16.5" cy="28.5" r="1.3" fill="#FF7A00"/>
+          </svg>
+        </span>
+        <div class="pain__body">
+          <h3>多系统数据孤岛</h3>
+          <p>多品牌、多系统数据孤岛，管理决策缺乏统一数据支撑。</p>
+        </div>
+      </li>
+    </ul>
+  </div>
+</section>
+
+<!-- ============ 模块 3 五大维度解决方案 ============ -->
+<section class="section section--base" id="module3">
+  <div class="wrap">
+    <p class="eyebrow" data-reveal>五大维度解决方案</p>
+    <h2 class="section__title" data-reveal>围绕露天矿山采装运全流程，逐维度落地</h2>
+
+    <!-- 维度一 -->
+    <div class="dim" data-reveal>
+      <div class="dim__intro">
+        <span class="dim__index">01</span>
+        <h3 class="dim__name">整体管控<span class="dim__sub">矿山全景，尽在掌握</span></h3>
+        <p class="dim__desc">
+          打破信息孤岛，打造矿山「智慧大脑」。天远智慧矿山系统提供全域数据采集与三维可视化展示，实现「人、机、料、法、环」全生产要素的实时透明化管理。
+        </p>
+      </div>
+      <div class="dim__cards dim__cards--2">
+        <article class="card">
+          <div class="card__media"><img src="assets/img/overview_3d_sandbox.png" alt="3D 电子沙盘" loading="lazy"></div>
+          <div class="card__body">
+            <h4>3D 电子沙盘</h4>
+            <p>一屏观全局，一图管全域。通过三维数字孪生技术，完整复刻矿山地形地貌、生产设施与人员分布，让矿区每一寸土地、每一台设备、每一位人员的实时状态都清晰可见，实现矿山全要素的数字化、可视化管理。</p>
+          </div>
+        </article>
+        <article class="card">
+          <div class="card__media"><img src="assets/img/overview_live_video.png" alt="视频直播" loading="lazy"></div>
+          <div class="card__body">
+            <h4>视频直播</h4>
+            <p>全域视频无死角覆盖，实时回传采掘作业、运输调度、生产工序的现场画面。支持重点区域高清监控、异常情况智能预警，让您随时随地掌握生产一线动态，实现对关键环节的精准把控与高效指挥。</p>
+          </div>
+        </article>
+      </div>
+    </div>
+
+    <!-- 维度二 -->
+    <div class="dim dim--flip" data-reveal>
+      <div class="dim__intro">
+        <span class="dim__index">02</span>
+        <h3 class="dim__name">计划·产量<span class="dim__sub">智能排产，产能跃升</span></h3>
+        <p class="dim__desc">
+          从年计划到日排产，天远系统提供精准的生产模型，确保每一个生产环节紧密咬合，告别传统人工记车，实现产量数据自动、精准统计。
+        </p>
+      </div>
+      <div class="dim__cards dim__cards--3">
+        <article class="card">
+          <div class="card__media"><img src="assets/img/plan_production_stats.png" alt="生产统计" loading="lazy"></div>
+          <div class="card__body">
+            <h4>生产统计</h4>
+            <p>自动拆解生产计划、精准下发工作任务、自动汇总生产数据、智能分析产能瓶颈、及时预警任务延误，实现生产全流程的透明化、精细化管控，为生产调度与决策提供可靠的数据支撑。</p>
+          </div>
+        </article>
+        <article class="card">
+          <div class="card__media"><img src="assets/img/plan_output_collection.png" alt="产量采集" loading="lazy"></div>
+          <div class="card__body">
+            <h4>产量采集</h4>
+            <p>AI 识别、GPS 定位、蓝牙刷卡、地磅等多种采集方法。</p>
+          </div>
+        </article>
+        <article class="card">
+          <div class="card__media"><img src="assets/img/plan_traceability.png" alt="数据可追溯" loading="lazy"></div>
+          <div class="card__body">
+            <h4>数据可追溯</h4>
+            <p>每一趟运输都生成完整的作业记录，系统与车机随时可查。</p>
+          </div>
+        </article>
+      </div>
+    </div>
+
+    <!-- 维度三 -->
+    <div class="dim" data-reveal>
+      <div class="dim__intro">
+        <span class="dim__index">03</span>
+        <h3 class="dim__name">成本·效率<span class="dim__sub">精益运营，利润倍增</span></h3>
+        <p class="dim__desc">
+          拒绝粗放管理，天远系统深入每一个作业循环。通过智能算法优化运输路径与设备协同，大幅缩短设备空载与排队时间，实现极致的降本增效。
+        </p>
+      </div>
+      <div class="dim__cards dim__cards--3">
+        <article class="card">
+          <div class="card__media"><img src="assets/img/cost_monthly_analysis.png" alt="生产·效率月度分析" loading="lazy"></div>
+          <div class="card__body">
+            <h4>生产·效率月度分析</h4>
+            <p>挖机、矿卡产量与油耗、装车效率逐月对比，降本增效有据可依。</p>
+          </div>
+        </article>
+        <article class="card">
+          <div class="card__media"><img src="assets/img/cost_trend.png" alt="产量·油耗·装车数运行趋势" loading="lazy"></div>
+          <div class="card__body">
+            <h4>产量·油耗·装车数运行趋势</h4>
+            <p>产量、油耗与装车数在运行过程中同步呈现，波动与异常一眼可见。</p>
+          </div>
+        </article>
+        <article class="card">
+          <div class="card__media"><img src="assets/img/cost_vehicle_terminal.png" alt="AI车机" loading="lazy"></div>
+          <div class="card__body">
+            <h4>AI车机</h4>
+            <p>装车数据在车机端实时确认与回传，任务与产量同步闭环。</p>
+          </div>
+        </article>
+      </div>
+    </div>
+
+    <!-- 维度四 -->
+    <div class="dim dim--flip" data-reveal>
+      <div class="dim__intro">
+        <span class="dim__index">04</span>
+        <h3 class="dim__name">设备健康<span class="dim__sub">预测维护，防患未然</span></h3>
+        <p class="dim__desc">
+          设备是矿山的核心资产。我们通过物联网（IoT）技术，为每一台重型设备进行「实时体检」，将「事后维修」升级为「事前预防」。
+        </p>
+      </div>
+      <div class="dim__cards dim__cards--2">
+        <article class="card">
+          <div class="card__media"><img src="assets/img/health_helmet.png" alt="智能头盔" loading="lazy"></div>
+          <div class="card__body">
+            <h4>智能头盔</h4>
+            <p>智能头盔像一位随时待命的专家助手，初学者也能在 AR 指导下精准完成复杂任务，大幅降低技术门槛，用人成本直接降低。</p>
+          </div>
+        </article>
+        <article class="card">
+          <div class="card__media"><img src="assets/img/health_prediction.png" alt="分析预防" loading="lazy"></div>
+          <div class="card__body">
+            <h4>分析预防</h4>
+            <p>提前识别潜在故障，预测关键部件的风险和寿命，减少非计划停机带来的损失。</p>
+          </div>
+        </article>
+      </div>
+    </div>
+
+    <!-- 维度五 -->
+    <div class="dim" data-reveal>
+      <div class="dim__intro">
+        <span class="dim__index">05</span>
+        <h3 class="dim__name">安全生产<span class="dim__sub">科技护航，生命至上</span></h3>
+        <p class="dim__desc">
+          安全是矿山企业不可逾越的红线。天远智慧矿山构建全方位、全天候的主动安全防护网，把隐患消灭在萌芽状态。
+        </p>
+      </div>
+      <div class="dim__cards dim__cards--3">
+        <article class="card">
+          <div class="card__media"><img src="assets/img/safety_driver_behavior.png" alt="司机危险行为监测" loading="lazy"></div>
+          <div class="card__body">
+            <h4>司机危险行为监测</h4>
+            <p>主动安全监测，让每一位矿车司机、每一趟运输任务、每一次行车过程，都在您的安全守护之中。</p>
+          </div>
+        </article>
+        <article class="card">
+          <div class="card__media"><img src="assets/img/safety_intrusion.png" alt="人员侵入监测" loading="lazy"></div>
+          <div class="card__body">
+            <h4>人员侵入监测</h4>
+            <p>让每一次人员侵入、每一处危险盲区，都在您的及时预警之中。</p>
+          </div>
+        </article>
+        <article class="card">
+          <div class="card__media"><img src="assets/img/safety_remote_driving.jpg" alt="远程驾驶" loading="lazy"></div>
+          <div class="card__body">
+            <h4>远程驾驶</h4>
+            <p>依托 5G 通信实现人机分离，让操作人员彻底脱离塌方、粉尘等高危施工作业面。</p>
+          </div>
+        </article>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 模块 4 优势与核心效果 ============ -->
+<section class="section section--deep" id="module4">
+  <div class="wrap">
+    <p class="eyebrow" data-reveal>优势与核心效果</p>
+    <h2 class="section__title" data-reveal>为什么是天远智慧矿山解决方案</h2>
+
+    <div class="adv" data-reveal>
+      <article class="adv__card">
+        <span class="adv__icon" aria-hidden="true">
+          <svg viewBox="0 0 40 40" fill="none">
+            <path d="M20 19l-6.5 15.5M20 19l6.5 15.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+            <path d="M14.5 34.5h11" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+            <circle cx="20" cy="16.5" r="2.2" stroke="currentColor" stroke-width="1.8"/>
+            <path d="M13.5 9.5a9.2 9.2 0 0 1 13 0" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" opacity=".75"/>
+            <path d="M10 5.5a14.1 14.1 0 0 1 20 0" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" opacity=".45"/>
+            <circle cx="20" cy="34.5" r="1.4" fill="#FF7A00"/>
+          </svg>
+        </span>
+        <h3>5G 通讯</h3>
+        <p>硬件成本低，无需搭建基站，通过 4G、5G、近距离通讯即可完成数据传输。</p>
+      </article>
+      <article class="adv__card">
+        <span class="adv__icon" aria-hidden="true">
+          <svg viewBox="0 0 40 40" fill="none">
+            <path d="M7 27.5a13 13 0 0 1 26 0" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+            <path d="M20 27.5l6-8.5" stroke="#FF7A00" stroke-width="1.9" stroke-linecap="round"/>
+            <circle cx="20" cy="27.5" r="2" stroke="currentColor" stroke-width="1.7"/>
+            <path d="M9.5 22.5l2.2 1.2M30.5 22.5l-2.2 1.2M20 12.5v2.4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" opacity=".6"/>
+            <path d="M12 34.5h16" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" opacity=".8"/>
+          </svg>
+        </span>
+        <h3>信息采集</h3>
+        <p>工作小时、油耗等数据自动采集。实时工况与历史工况统计数据，可根据这些数据判断、监控设备状况。</p>
+      </article>
+      <article class="adv__card">
+        <span class="adv__icon" aria-hidden="true">
+          <svg viewBox="0 0 40 40" fill="none">
+            <rect x="5.5" y="6.5" width="29" height="19" rx="2.5" stroke="currentColor" stroke-width="1.8"/>
+            <path d="M14.5 31.5h11M20 25.5v6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+            <circle cx="13.5" cy="18.5" r="2.4" stroke="currentColor" stroke-width="1.6"/>
+            <circle cx="26.5" cy="12.5" r="2.4" stroke="currentColor" stroke-width="1.6"/>
+            <circle cx="24" cy="20" r="1.6" fill="#FF7A00"/>
+            <path d="M15.6 17.3l8.6-3.7M25.6 14.6l-2.6 4" stroke="currentColor" stroke-width="1.4" opacity=".7"/>
+          </svg>
+        </span>
+        <h3>线上管理</h3>
+        <p>多品牌统一管理。满足客户多机种、多品牌、多数据的需求，将设备管理集中化，解决客户监管困难的问题，节省人力成本。</p>
+      </article>
+    </div>
+
+    <div class="results" data-reveal>
+      <div class="results__head">
+        <p class="results__kicker">CORE RESULTS</p>
+        <h3 class="results__title">核心效果 · 用数据说话</h3>
+        <p class="results__sub">智能化改造后，矿山的效率、成本、安全三个维度实现可视化的显著跃升。</p>
+      </div>
+      <ul class="results__grid">
+        <li class="result">
+          <p class="result__num"><span data-count="90">0</span><i>%</i></p>
+          <p class="result__label">产量统计效率提升</p>
+        </li>
+        <li class="result">
+          <p class="result__num"><span data-count="80">0</span><i>%</i></p>
+          <p class="result__label">结算纠纷减少</p>
+        </li>
+        <li class="result">
+          <p class="result__num"><span data-count="95">0</span><i>%+</i></p>
+          <p class="result__label">设备利用率分析精准度</p>
+        </li>
+        <li class="result">
+          <p class="result__num"><span data-count="30">0</span><i>%</i></p>
+          <p class="result__label">装车等待时间缩短</p>
+        </li>
+        <li class="result">
+          <p class="result__num result__num--text">分钟级</p>
+          <p class="result__label">故障响应时间（原小时级）</p>
+        </li>
+        <li class="result">
+          <p class="result__num"><span data-count="25">0</span><i>%</i></p>
+          <p class="result__label">维修成本降低</p>
+        </li>
+        <li class="result">
+          <p class="result__num"><span data-count="60">0</span><i>%</i></p>
+          <p class="result__label">事故率降低</p>
+        </li>
+        <li class="result">
+          <p class="result__num result__num--text">周<i class="arrow">→</i>日</p>
+          <p class="result__label">算薪周期缩短</p>
+        </li>
+        <li class="result">
+          <p class="result__num result__num--text">彻底杜绝</p>
+          <p class="result__label">代打卡现象</p>
+        </li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 模块 5 适用对象与典型案例 ============ -->
+<section class="section section--base" id="module5">
+  <div class="wrap">
+    <p class="eyebrow" data-reveal>适用对象与典型案例</p>
+    <h2 class="section__title" data-reveal>谁在用，用在哪</h2>
+
+    <div class="tags" data-reveal>
+      <span class="tag">露天煤矿企业</span>
+      <span class="tag">砂石骨料矿山</span>
+      <span class="tag">有色金属矿山</span>
+      <span class="tag">化工原料类矿山</span>
+      <span class="tag">建材类矿山</span>
+    </div>
+
+    <div class="cases" data-reveal>
+      <article class="case">
+        <div class="case__thumb"><img src="assets/img/ai/case_coal.png" alt="某大型露天煤矿应用场景" loading="lazy"></div>
+        <div class="case__body">
+          <h3 class="case__title">某大型露天煤矿<span class="case__meta">年产千万吨级</span></h3>
+          <dl class="case__list">
+            <div><dt>痛点</dt><dd>产量依赖人工记车统计，日报次日才能汇总，结算争议不断；200 余台矿卡靠对讲喊话调度，装车排队严重；多标段数据分散在不同系统里，管理层看不到实时全貌。</dd></div>
+            <div><dt>方案</dt><dd>部署 3D 电子沙盘与全域视频直播建立可视化底座；车载终端采集 CAN 与 GPS 数据，AI 装车计数与装运设备配对自动汇总产量；智能调度重排车流；司机危险行为监测与作业盲区人员进入识别覆盖全部作业面。</dd></div>
+          </dl>
+          <div class="case__stats">
+            <div class="case__stat"><b><span data-count="90">0</span>%</b><span>产量统计效率提升</span></div>
+            <div class="case__stat"><b><span data-count="80">0</span>%</b><span>结算纠纷减少</span></div>
+            <div class="case__stat"><b><span data-count="30">0</span>%</b><span>装车等待时间缩短</span></div>
+            <div class="case__stat"><b><span data-count="60">0</span>%</b><span>事故率降低</span></div>
+          </div>
+        </div>
+      </article>
+
+      <article class="case">
+        <div class="case__thumb"><img src="assets/img/ai/case_sand.png" alt="某砂石骨料集团应用场景" loading="lazy"></div>
+        <div class="case__body">
+          <h3 class="case__title">某砂石骨料集团<span class="case__meta">设备规模 200+ 台</span></h3>
+          <dl class="case__list">
+            <div><dt>痛点</dt><dd>挖机、矿卡、装载机来自多个品牌，各有各的厂家平台，无法统一监管；油耗靠加油记录手工统计，单车成本算不清；保养凭里程估算，突发停机直接打断骨料供应。</dd></div>
+            <div><dt>方案</dt><dd>多品牌车载终端统一接入，工作小时与油耗自动采集；生产·效率月度分析逐月对比挖机、矿卡产量与油耗；分析预防模型预测关键部件风险与寿命；线上管理把 200+ 台设备集中到同一张表。</dd></div>
+          </dl>
+          <div class="case__stats">
+            <div class="case__stat"><b><span data-count="95">0</span>%+</b><span>设备利用率分析精准度</span></div>
+            <div class="case__stat"><b><span data-count="25">0</span>%</b><span>维修成本降低</span></div>
+            <div class="case__stat"><b class="is-text">分钟级</b><span>故障响应时间（原小时级）</span></div>
+          </div>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 模块 6 方案支撑 ============ -->
+<section class="section section--deep" id="module6">
+  <div class="wrap">
+    <p class="eyebrow" data-reveal>方案支撑</p>
+    <h2 class="section__title" data-reveal>硬件、平台与 AI 能力，一套都不少</h2>
+
+    <div class="stack" data-reveal>
+      <article class="stack__card">
+        <div class="stack__media"><img src="assets/img/tech_edge_ai.png" alt="边缘 AI 终端" loading="lazy"></div>
+        <div class="stack__body">
+          <h3>边缘 AI 终端</h3>
+          <p class="stack__desc">RK3576/RK3588 边缘计算平台，集成 YOLO 目标检测、卡尔曼滤波追踪、TTS 语音交互</p>
+          <div class="stack__tags"><span>RK3576/RK3588</span><span>YOLO</span><span>卡尔曼滤波</span><span>TTS</span></div>
+        </div>
+      </article>
+
+      <article class="stack__card">
+        <div class="stack__media"><img src="assets/img/ai/tech_vehicle_terminal.png" alt="车载终端" loading="lazy"></div>
+        <div class="stack__body">
+          <h3>车载终端</h3>
+          <p class="stack__desc">定位版／数据采集版／AI 基础版／AI Plus 版／AI Ultra 版五档可选，支持 CAN 总线采集、AI 模型推理、UWB/蓝牙配对</p>
+          <div class="stack__tags"><span>五档可选</span><span>CAN 总线</span><span>AI 推理</span><span>UWB/蓝牙</span></div>
+        </div>
+      </article>
+
+      <article class="stack__card">
+        <div class="stack__media"><img src="assets/img/tech_helmet.png" alt="智能头盔" loading="lazy"></div>
+        <div class="stack__body">
+          <h3>智能头盔</h3>
+          <p class="stack__desc">北斗/GPS 双模定位、视音频通话、AI 模型识别</p>
+          <div class="stack__tags"><span>北斗/GPS 双模</span><span>视音频通话</span><span>AI 识别</span></div>
+        </div>
+      </article>
+
+      <article class="stack__card">
+        <div class="stack__media"><img src="assets/img/ai/tech_cloud.png" alt="云端平台" loading="lazy"></div>
+        <div class="stack__body">
+          <h3>云端平台</h3>
+          <p class="stack__desc">3D 电子沙盘、数据大屏、设备监控、智能调度、运营报告、安全环保</p>
+          <div class="stack__tags"><span>3D 沙盘</span><span>数据大屏</span><span>智能调度</span><span>运营报告</span><span>安全环保</span></div>
+        </div>
+      </article>
+
+      <article class="stack__card">
+        <div class="stack__media"><img src="assets/img/ai/tech_data_platform.png" alt="数据中台" loading="lazy"></div>
+        <div class="stack__body">
+          <h3>数据中台</h3>
+          <p class="stack__desc">IoTDB 时序数据库、Kafka 消息队列、MySQL 关系数据库、Redis 缓存</p>
+          <div class="stack__tags"><span>IoTDB</span><span>Kafka</span><span>MySQL</span><span>Redis</span></div>
+        </div>
+      </article>
+
+      <article class="stack__card">
+        <div class="stack__media"><img src="assets/img/ai/tech_ai_agent.png" alt="AI 智能体" loading="lazy"></div>
+        <div class="stack__body">
+          <h3>AI 智能体</h3>
+          <p class="stack__desc">挖掘机装车计数、装运设备配对、斗齿丢失报警、卡车满载识别、斗容利用率、司机疲劳驾驶、司机人脸识别、作业盲区人员进入、未按规定着装</p>
+          <div class="stack__tags"><span>装车计数</span><span>设备配对</span><span>斗齿丢失</span><span>满载识别</span><span>疲劳驾驶</span><span>人脸识别</span><span>盲区人员</span><span>着装识别</span></div>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+</div><!-- /.site -->
+
+<!-- ============ 获取方案 表单弹层（样式对齐智能头盔页「联系我们」弹窗） ============ -->
+<div class="cform-mask" id="leadModal">
+  <div class="cform" role="dialog" aria-modal="true" aria-label="获取方案">
+    <button class="cform__close" type="button" data-close-modal aria-label="关闭">×</button>
+    <span class="cform__cat">CONTACT · 获取方案</span>
+    <h3>留下您的信息</h3>
+    <p class="cform__tip">请填写公司名称与联系方式，我们会尽快与您取得联系。</p>
+
+    <form id="leadForm" novalidate>
+      <label class="cform__field">
+        <span>公司名称</span>
+        <input name="company" type="text" placeholder="请输入公司名称" autocomplete="organization" required>
+      </label>
+      <label class="cform__field">
+        <span>联系方式</span>
+        <input name="contact" type="tel" placeholder="手机号 / 微信 / 邮箱" autocomplete="tel" required>
+      </label>
+      <button class="btn btn--primary btn--block cform__submit" type="submit">提交</button>
+      <p class="cform__ok" id="leadOk" hidden></p>
+    </form>
+  </div>
+</div>
+
+<script src="assets/js/main.js"></script>
+
+<script>
+/* 矿山实景视频：原生控制条（进度条/音量/全屏/画中画） + 自动循环播放
+   声音：进入页面先尝试有声播放；若被浏览器自动播放策略拦截，则自动回退静音，
+   用户首次点击/按键时自动恢复声音，无需手动点音量图标 */
+(function(){
+  var v = document.getElementById('mineVideo');
+  if (!v) return;
+  var autoMuted = false;
+
+  function playWithSound(){
+    v.muted = false;
+    var p = v.play();
+    if (p && p.catch) p.catch(function(){
+      if (autoMuted) return;
+      autoMuted = true;
+      v.muted = true;
+      var p2 = v.play();
+      if (p2 && p2.catch) p2.catch(function(){});
+    });
+  }
+
+  /* 用户首次交互：若此前是被策略强制静音，立刻恢复声音 */
+  function resumeSound(){
+    if (!autoMuted) return;
+    autoMuted = false;
+    v.muted = false;
+    if (v.paused) { var p = v.play(); if (p && p.catch) p.catch(function(){}); }
+  }
+
+  if (v.readyState >= 1) playWithSound();
+  v.addEventListener('loadedmetadata', function(){ if (v.paused) playWithSound(); }, {once:true});
+  /* 捕获阶段监听：原生控制条会吞掉冒泡到 document 的事件，故在 video 上再挂一层 */
+  v.addEventListener('pointerdown', resumeSound, true);
+  document.addEventListener('pointerdown', resumeSound, true);
+  document.addEventListener('keydown', resumeSound, true);
+
+  /* ---- 进度条定位修复 ----
+     本站静态服务器（本地预览 / CloudStudio 网关）不返回 Accept-Ranges，也不处理 Range 请求，
+     浏览器因此把媒体判定为「不可随机定位」，video.seekable 恒为 [0,0]：
+     点进度条任何位置都无法跳到对应播放位置（连已缓冲区间也跳不动）。
+     解法：整段 fetch 回来后换成 blob: 源播放 —— blob 的字节区间完整可知，seekable 变为整段，
+     进度条点击即精确定位。换源瞬间保留播放进度、播放/暂停与静音状态，避免画面跳回 0:00。 */
+  var blobTried = false;
+  function seekableFull(){
+    return v.seekable.length > 0 && v.seekable.end(v.seekable.length - 1) >= v.duration - 1;
+  }
+  function upgradeToBlob(){
+    if (blobTried || !(v.duration > 0) || seekableFull()) return;   // 服务器已支持 Range 时不做任何处理
+    var src = v.getAttribute('src');
+    if (!src) return;
+    blobTried = true;
+    fetch(src).then(function(r){ if (!r.ok) throw new Error(r.status); return r.blob(); }).then(function(blob){
+      var t = v.currentTime, playing = !v.paused && !v.ended, muted = v.muted;
+      var applied = false;
+      function onMeta(){
+        if (applied) return;
+        applied = true;
+        try { v.currentTime = t; } catch(e){}
+        v.muted = muted;
+        if (playing) { var p = v.play(); if (p && p.catch) p.catch(function(){}); }
+      }
+      v.addEventListener('loadedmetadata', onMeta);
+      v.removeAttribute('poster');          // 换源时不要闪回封面图
+      v.src = URL.createObjectURL(blob);
+      v.load();
+    }).catch(function(){ blobTried = false; });
+  }
+  if (v.readyState >= 1) upgradeToBlob();
+  v.addEventListener('loadedmetadata', upgradeToBlob);
+})();
+</script>
+
+</body>
+</html>
